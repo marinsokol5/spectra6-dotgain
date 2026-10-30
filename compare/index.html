@@ -24,14 +24,14 @@ section { padding: 20px 0 8px; border-bottom: 1px solid var(--line); }
 .row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
 figure { margin: 0; }
 figcaption { margin-top: 4px; font-size: 14px; }
-.view { position: relative; cursor: crosshair; line-height: 0; }
+.view { position: relative; cursor: grab; line-height: 0; }
+.view:active { cursor: grabbing; }
 .ov { width: 100%; height: auto; display: block; background: var(--line); }
 .inset { position: absolute; left: 0; bottom: 0; width: 40%; aspect-ratio: 1; image-rendering: pixelated;
   border: 1px solid rgba(255,255,255,.9); box-shadow: 0 0 0 1px rgba(0,0,0,.45); pointer-events: none; }
-.hl { position: absolute; display: none; outline: 1px solid rgba(255,255,255,.75); box-shadow: 0 0 0 1px rgba(0,0,0,.35);
+.hl { position: absolute; z-index: 1; outline: 1px solid rgba(255,255,255,.9); box-shadow: 0 0 0 1px rgba(0,0,0,.45);
   pointer-events: none; }
-.hover .hl { display: block; }
-.off .inset, .off .hl { display: none !important; }
+.off .inset, .off .hl { display: none; }
 button { font: inherit; font-size: 13px; color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 3px 9px; cursor: pointer; }
 button[aria-pressed=true] { border-color: var(--hi); color: var(--hi); }
 .ab { margin: 10px 0 0; }
@@ -52,8 +52,8 @@ paperlesspaper app runs it, re-created from the app's source, and by spectra6-do
 would show them, with a model measured on a real panel in which darker pixels bleed into lighter neighbours. Our
 dithering is designed for that model, so it has the advantage here; the
 <a href="https://github.com/marinsokol5/spectra6-dotgain#results">README</a> has the tests on a real frame.</p>
-<p class="m intro">The square in each image's corner is a close-up; click anywhere on an image to move it, for all
-three images of the row. Panel white is shown as screen white. The model's black is a little purple-blue in both
+<p class="m intro">The square in each image's bottom-left corner magnifies the small square marked on the image. Drag
+the marked square, or click anywhere, to move it in all three images of the row. Panel white is shown as screen white. The model's black is a little purple-blue in both
 simulations.</p>
 <p id="err" class="intro">This page reads its images' pixels, which browsers block for files opened from disk. Open it
 from a web server instead, for example <code>python3 -m http.server</code> in the repository folder.</p>
@@ -703,9 +703,16 @@ class Row {
     this.views = [...sec.querySelectorAll(".view")];
     this.data = null;
     this.views.forEach(v => {
-      v.addEventListener("click", ev => { [this.cx, this.cy] = this.at(v, ev); this.drawInsets(); this.hover(v, ev); });
-      v.addEventListener("mousemove", ev => this.hover(v, ev));
-      v.addEventListener("mouseleave", () => sec.classList.remove("hover"));
+      // mouse and pen drag; a touch scrolls the page instead, and a tap still moves the square (click)
+      v.addEventListener("pointerdown", ev => {
+        if (ev.pointerType === "touch" || !closeup) return;
+        v.setPointerCapture(ev.pointerId);
+        this.dragging = v;
+        this.moveTo(v, ev);
+      });
+      v.addEventListener("pointermove", ev => { if (this.dragging === v) this.moveTo(v, ev); });
+      v.addEventListener("pointerup", () => { this.dragging = null; });
+      v.addEventListener("click", ev => { if (closeup) this.moveTo(v, ev); });
     });
     sec.querySelector(".abbtn").addEventListener("click", () => this.download());
   }
@@ -719,14 +726,17 @@ class Row {
     const y0 = Math.min(Math.max(Math.round(cy - s / 2), 0), this.H - s);
     return [x0, y0, s];
   }
-  hover(v, ev) {
-    if (!closeup) return;
-    const [x0, y0, s] = this.region(...this.at(v, ev));
+  moveTo(v, ev) {
+    [this.cx, this.cy] = this.at(v, ev);
+    if (this.frame) return;
+    this.frame = requestAnimationFrame(() => { this.frame = 0; this.drawInsets(); });
+  }
+  mark() {
+    const [x0, y0, s] = this.region(this.cx, this.cy);
     this.sec.querySelectorAll(".hl").forEach(h => Object.assign(h.style, {
       left: `${100 * x0 / this.W}%`, top: `${100 * y0 / this.H}%`, width: `${100 * s / this.W}%`,
       height: `${100 * s / this.H}%`,
     }));
-    this.sec.classList.add("hover");
   }
   async load() {
     if (this.data) return this.data;
@@ -749,6 +759,7 @@ class Row {
     await this.drawInsets();
   }
   async drawInsets() {
+    this.mark();
     if (!this.data || !closeup) return;
     const m = await model, { photo, idx } = this.data, [x0, y0, s] = this.region(this.cx, this.cy);
     const insets = this.sec.querySelectorAll(".inset");
