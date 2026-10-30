@@ -1,4 +1,4 @@
-"""python -m spectra6_dither photo.jpg out.png [--sim preview.png]"""
+"""python -m spectra6_dotgain photo.jpg out.png [--sim preview.png]"""
 import argparse
 
 import numpy as np
@@ -8,7 +8,7 @@ from . import device_image, dither, linear_to_srgb, render, resize_cover
 
 
 def main():
-    ap = argparse.ArgumentParser(prog="python -m spectra6_dither",
+    ap = argparse.ArgumentParser(prog="python -m spectra6_dotgain",
                                  description="Photo -> device PNG for the OpenPaper L (1600x1200, 6 device colours).")
     ap.add_argument("photo")
     ap.add_argument("out", help="device PNG; portrait photos are rotated 90 degrees clockwise into 1600x1200")

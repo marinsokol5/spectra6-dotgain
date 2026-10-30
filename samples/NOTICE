@@ -8,7 +8,7 @@ portrait.jpg is AI-generated (from the repository's "AI generated" folder), not 
 here because none of the real photos shows skin in colour.
 
 Each was cover-cropped to 4:3 and resized to the panel size in linear light (Lanczos), with
-spectra6_dither.prep.resize_cover, and saved without metadata (JPEG quality 92, 4:4:4; the grey
+spectra6_dotgain.prep.resize_cover, and saved without metadata (JPEG quality 92, 4:4:4; the grey
 ramp as PNG).
 
   portrait.jpg    AI generated/Vercity_Dreamgaze_1960s_hippie_girl._technicolor_old_movie_film_eed08513-7f0e-4f02-9c7e-7c073ef45d57.png

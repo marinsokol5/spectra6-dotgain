@@ -1,5 +1,5 @@
 {
-  "name": "spectra6-dither-baseline",
+  "name": "spectra6-dotgain-baseline",
   "private": true,
   "description": "epdoptimize as the paperlesspaper app uses it, for the comparison page",
   "type": "module",

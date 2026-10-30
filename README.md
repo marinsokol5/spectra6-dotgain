@@ -1,10 +1,10 @@
-# spectra6-dither
+# spectra6-dotgain
 
 We dither photos for a paperlesspaper OpenPaper L (13.3" E Ink Spectra 6, 1600x1200 at 150 ppi) against a model of
 how its dots really render, measured on our frame. This repository holds that code, the measurements behind it, and
 a page that shows our output next to epdoptimize 1.3.0 as the paperlesspaper app runs it.
 
-Comparison page: https://marinsokol5.github.io/spectra6-dither/compare/
+Comparison page: https://marinsokol5.github.io/spectra6-dotgain/compare/
 
 ![Chart patches photographed on the panel](docs/checkerboard-vs-blocks.png)
 
@@ -27,7 +27,7 @@ black to luminance 0.17). The measuring code is not included.
   predicted; with green made yellow-green (Lab about 63/-24/24) the model gives 7.7. Dithering for that model cut
   the yellow by 3.8 b* on the next photo (predicted 3.7 to 4.8).
 
-Mean CIEDE2000 between `spectra6_dither/panel.py` and the photos, with the inks as photographed:
+Mean CIEDE2000 between `spectra6_dotgain/panel.py` and the photos, with the inks as photographed:
 
 | model | 17 mixed patches (fitted on these) | 81 ramp segments (not fitted) |
 |---|---|---|
@@ -42,7 +42,7 @@ flat-colour preview cannot show any of this.
 
 ## What ours does
 
-`spectra6_dither/` is the code we run, taken from our lab code without changing the maths: about 6 s per image on
+`spectra6_dotgain/` is the code we run, taken from our lab code without changing the maths: about 6 s per image on
 an M2 (7.6 s on the first run, while numba compiles).
 
 1. Cover-crop to 4:3, Lanczos resize in linear light (`prep.py`).
@@ -77,7 +77,7 @@ black-point compensation; C is this code.
 
 ```
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt     # tested with Python 3.12
-.venv/bin/python -m spectra6_dither photo.jpg device.png --sim preview.png
+.venv/bin/python -m spectra6_dotgain photo.jpg device.png --sim preview.png
 (cd scripts && npm ci) && .venv/bin/python scripts/build_compare.py
 ```
 

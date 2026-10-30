@@ -1,5 +1,5 @@
 """Build compare/: our dithering next to epdoptimize 1.3.0 as the paperlesspaper app runs it, on the images in
-samples/, both seen through the measured panel model (spectra6_dither/panel-model.json).
+samples/, both seen through the measured panel model (spectra6_dotgain/panel-model.json).
 
     (cd scripts && npm ci)              # epdoptimize 1.3.0, pinned in package-lock.json
     python scripts/build_compare.py     # under a minute per image
@@ -22,9 +22,9 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from spectra6_dither import (ROLES, device_image, dither, indices_from_device, linear_to_srgb,  # noqa: E402
+from spectra6_dotgain import (ROLES, device_image, dither, indices_from_device, linear_to_srgb,  # noqa: E402
                              render, resize_cover)
-from spectra6_dither.prep import srgb_to_linear  # noqa: E402
+from spectra6_dotgain.prep import srgb_to_linear  # noqa: E402
 
 OUT = ROOT / "compare"
 IMG = OUT / "img"
@@ -144,7 +144,7 @@ def score(sim_lin, ref_lin, distance_mm=500):
 
 
 # the inks as photographed (room glare included), for a score that does not use the panel model
-PANEL_JSON = json.loads((ROOT / "spectra6_dither" / "panel-model.json").read_text())
+PANEL_JSON = json.loads((ROOT / "spectra6_dotgain" / "panel-model.json").read_text())
 INKS_PHOTO = np.array([PANEL_JSON["inks_as_photographed"][r] for r in ROLES], np.float32)
 
 # ---------------------------------------------------------------------------------------------------- images
@@ -215,7 +215,7 @@ def build_image(file, title, upstream, crops):
 
 
 # ---------------------------------------------------------------------------------------------------- page
-COLS = [("original", "Photo"), ("epdoptimize", "epdoptimize 1.3.0, app settings"), ("ours", "spectra6-dither")]
+COLS = [("original", "Photo"), ("epdoptimize", "epdoptimize 1.3.0, app settings"), ("ours", "spectra6-dotgain")]
 KERNELS = {"floydSteinberg": "Floyd-Steinberg", "stucki": "Stucki"}
 
 
@@ -262,7 +262,7 @@ PAGE = """<!doctype html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>spectra6-dither comparison</title>
+<title>spectra6-dotgain comparison</title>
 <style>
 :root { --bg: #fafaf8; --fg: #1c1c1e; --m: #62626a; --line: #dcdcd6; --hi: #d9480f; --z: 2; color-scheme: light dark; }
 @media (prefers-color-scheme: dark) { :root { --bg: #161618; --fg: #e6e6e8; --m: #9a9aa2; --line: #36363c; --hi: #ff8a4c; } }
@@ -302,13 +302,13 @@ summary { cursor: pointer; }
 </head>
 <body>
 <main>
-<h1>OpenPaper L: epdoptimize 1.3.0 as the paperlesspaper app runs it, and spectra6-dither</h1>
+<h1>OpenPaper L: epdoptimize 1.3.0 as the paperlesspaper app runs it, and spectra6-dotgain</h1>
 <p class="intro">paperlesspaper's sample images at the panel's size (1600&times;1200, 150 ppi): the photo, epdoptimize
 1.3.0 with the settings the paperlesspaper app uses (the kernel its suggestion picked is in brackets), and
-spectra6-dither. The first row shows each whole image at half size, every pixel the linear-light average of 2&times;2
+spectra6-dotgain. The first row shows each whole image at half size, every pixel the linear-light average of 2&times;2
 panel pixels; click it to choose the 1:1 detail below. Panel white is shown as screen white. &Delta;E<sub>00</sub> is
 the mean S&#8209;CIELAB CIEDE2000 difference from the photo at 50 cm, lower is closer. Each image links a stacked A/B
-device PNG for a real frame; <code>python -m spectra6_dither photo.jpg out.png</code> makes a full-frame one.</p>
+device PNG for a real frame; <code>python -m spectra6_dotgain photo.jpg out.png</code> makes a full-frame one.</p>
 <p class="note">Both dithered images are simulated with the same panel model, measured on one OpenPaper L: a lighter pixel
 loses part of its area to darker neighbours, yellow spreads into white, green in fine patterns reads yellow-green.
 Both show the model's black, which is purple-blue because the glare removed from the measured inks is assumed
