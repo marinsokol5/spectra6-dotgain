@@ -76,13 +76,14 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt    # tested w
 ```
 
 `device.png` holds only the 6 device colours, rotated 90° clockwise into the panel's 1600x1200 if the photo is
-portrait. It, and the page's A/B images, can be sent to a frame through paperlesspaper's API as `pictureDevice`.
+portrait. It can be sent to a frame through paperlesspaper's API as `pictureDevice`.
 `preview.png` is the panel model's simulation.
 
 To rebuild the page (needs Node): `(cd scripts && npm ci) && .venv/bin/python scripts/build_compare.py`. On an M2
-Mac it reproduces `compare/` byte for byte. The page stores only the device images and simulates them in the browser
-with `compare/panel.js`, a port of the panel model that gives the same 8-bit pixels as `panel.py`. Browsers allow that
-only over http, so to view it locally run `python3 -m http.server` here and open `localhost:8000/compare/`.
+Mac it reproduces `compare/` byte for byte. The page stores the device images and thumbnails of the photos, and
+simulates the device images in the browser with `compare/panel.js`, a port of the panel model that gives the same
+8-bit pixels as `panel.py`. Browsers allow that only over http, so to view it locally run `python3 -m http.server`
+here and open `localhost:8000/compare/`.
 
 ## How the page re-creates the app
 

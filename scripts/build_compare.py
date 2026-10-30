@@ -4,20 +4,20 @@ samples/ and gallery/.
     (cd scripts && npm ci)                          # epdoptimize 1.3.0, pinned in package-lock.json
     python scripts/build_compare.py [--workers 3]   # about a minute per image and worker
 
-Writes compare/index.html, compare/scores.json and, per image, compare/img/<name>.app.png and <name>.ours.png: the
-device images (1600x1200 palette PNGs, portrait photos rotated 90 degrees clockwise, as the CLI writes them). The page
-renders them through the panel model in the browser (compare/panel.js, a port of spectra6_dotgain/panel.py) and builds
-the A/B images there.
+Writes compare/index.html, compare/scores.json and, per image, compare/thumb/<name>.jpg (the gallery's thumbnail)
+and compare/img/<name>.app.png and <name>.ours.png: the device images (1600x1200 palette PNGs, portrait photos rotated
+90 degrees clockwise, as the CLI writes them). The page renders them through the panel model in the browser
+(compare/panel.js, a port of spectra6_dotgain/panel.py).
 Scores: mean S-CIELAB CIEDE2000 at 50 cm (150 ppi) between a simulation and the photo, white-adapted; "model" uses
 the panel model, "flat" mixes the inks as photographed pixel by pixel, with no darkening.
 """
 import argparse
-import hashlib
 import html
 import json
 import subprocess
 import sys
 import tempfile
+from urllib.parse import quote
 from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
@@ -31,6 +31,7 @@ from spectra6_dotgain.prep import PANEL, srgb_to_linear, to_srgb  # noqa: E402
 
 OUT = ROOT / "compare"
 IMG = OUT / "img"
+THUMB = OUT / "thumb"
 NODE = ROOT / "scripts" / "epdoptimize_app.mjs"
 
 # file in samples/ (sources in samples/NOTICE), title
@@ -161,10 +162,14 @@ def meta(folder, file, title):
     name = Path(file).stem
     im = to_srgb(Image.open(ROOT / folder / file))
     W, H = PANEL[::-1] if im.height > im.width else PANEL  # as resize_cover: portrait photos stay portrait
-    # which version is on top of the A/B image: fixed per image, but not always the same one
-    ours_top = hashlib.sha256(name.encode()).digest()[0] % 2 == 0
-    return {"name": name, "folder": folder, "file": file, "title": title, "w": W, "h": H,
-            "ab": ("ours", "app") if ours_top else ("app", "ours")}
+    return {"name": name, "folder": folder, "file": file, "title": title, "w": W, "h": H}
+
+
+def save_thumb(job):
+    """The gallery's thumbnail: the photo as it is dithered, a quarter of the size."""
+    folder, file, _ = job
+    im = resize_cover(Image.open(ROOT / folder / file))
+    im.resize((im.width // 4, im.height // 4), Image.LANCZOS).save(THUMB / f"{Path(file).stem}.jpg", quality=80)
 
 
 def build_image(job):
@@ -187,45 +192,48 @@ def build_image(job):
 
 # ---------------------------------------------------------------------------------------------------- page
 COLS = [("photo", "Photo"), ("app", "paperlesspaper app, re-created"), ("ours", "spectra6-dotgain")]
-KINDS = {"photo": "photo", "lowContrastPhoto": "low-contrast photo", "highContrastPhoto": "high-contrast photo",
-         "flatIllustration": "flat illustration", "lineArt": "line art", "textOrUi": "text or UI",
+KINDS = {"photo": "a photo", "lowContrastPhoto": "a low-contrast photo", "highContrastPhoto": "a high-contrast photo",
+         "flatIllustration": "a flat illustration", "lineArt": "line art", "textOrUi": "text or UI",
          "pixelArt": "pixel art", "unknown": "unknown"}
 KERNELS = {"floydSteinberg": "Floyd-Steinberg", "stucki": "Stucki", "atkinson": "Atkinson", "sierra3": "Sierra"}
+CODE = "https://github.com/marinsokol5/spectra6-dotgain/blob/main/"
+
+
+def suggestion(ep):
+    """What epdoptimize's suggestCanvasProcessingOptions made of the image, in a sentence."""
+    kind = KINDS.get(ep["imageKind"], ep["imageKind"])
+    conf = f" (confidence {ep['confidence']:.2f})" if ep.get("confidence") is not None else ""
+    o = ep["options"]
+    lab = o.get("colorMatching", "rgb") != "rgb"
+    if o.get("ditheringType") == "errorDiffusion":
+        how = "dithers it with " + KERNELS.get(o.get("errorDiffusionMatrix"), o.get("errorDiffusionMatrix"))
+        how += ", matching colours in Lab" if lab else ""
+    else:
+        how = "does not dither: each pixel gets the nearest colour" + (" in Lab" if lab else "")
+    return f"epdoptimize classifies it as {kind}{conf} and {how}."
 
 
 def section(im):
     n, W, H = im["name"], im["w"], im["h"]
     e = html.escape
-    ep = im["epdoptimize"]
-    kind = KINDS.get(ep["imageKind"], ep["imageKind"])
-    conf = f", confidence {ep['confidence']:.2f}" if ep.get("confidence") is not None else ""
-    o = ep["options"]
-    how = (KERNELS.get(o.get("errorDiffusionMatrix"), o.get("errorDiffusionMatrix"))
-           if o.get("ditheringType") == "errorDiffusion" else "no dithering, nearest colour")
-    if o.get("colorMatching", "rgb") != "rgb":
-        how += ", colours matched in " + o["colorMatching"].capitalize()
-    figs = []
-    for key, label in COLS:
-        if key == "photo":
-            sub = f' <a class="m" href="../{im["folder"]}/{e(im["file"])}">file</a>'
-        elif key == "app":
-            sub = f'<br><span class="m">epdoptimize: {e(kind)}{conf}; {e(how)}</span>'
-        else:
-            sub = ""
-        figs.append(f'<figure class="{key}"><div class="view"><canvas class="ov" width="{W // 2}" height="{H // 2}" '
-                    f'style="aspect-ratio:{W}/{H}"></canvas><div class="hl"></div></div><canvas class="zoom"></canvas>'
-                    f'<figcaption>{e(label)}{sub}</figcaption></figure>')
-    names = dict(COLS)
-    top, bottom = im["ab"]
+    src = f"../{im['folder']}/{quote(im['file'])}"
+    figs = "".join(f'<figure class="{key}"><figcaption>{e(label)}</figcaption><div class="view"><canvas class="ov" '
+                   f'width="{W // 2}" height="{H // 2}" style="aspect-ratio:{W}/{H}"></canvas><div class="hl"></div>'
+                   f'</div><canvas class="zoom"></canvas></figure>' for key, label in COLS)
     return f"""
-<section id="{e(n)}" data-name="{e(n)}" data-w="{W}" data-h="{H}"
-  data-photo="../{im['folder']}/{e(im['file'])}" data-top="{top}">
-  <h3>{e(im["title"])}</h3>
-  <div class="row">{"".join(figs)}</div>
-  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
-  photo twice, one version above the other. <details><summary>Which is which</summary>top: {names[top]},
-  bottom: {names[bottom]}</details></div>
+<section hidden data-name="{e(n)}" data-w="{W}" data-h="{H}" data-photo="{e(src)}">
+  <h2>{e(im["title"])}</h2>
+  <p class="m">{e(suggestion(im["epdoptimize"]))} <a href="{e(src)}">Photo file</a></p>
+  <div class="row">{figs}</div>
 </section>"""
+
+
+def tile(im):
+    e = html.escape
+    w, h = im["w"] // 4, im["h"] // 4
+    return (f'<a class="tile" href="#{e(quote(im["name"]))}" data-name="{e(im["name"])}"><img '
+            f'src="thumb/{e(quote(im["name"]))}.jpg" width="{w}" height="{h}" alt="" loading="lazy">'
+            f'<span>{e(im["title"])}</span></a>')
 
 
 PAGE = """<!doctype html>
@@ -238,74 +246,92 @@ PAGE = """<!doctype html>
 :root { --bg: #fafaf8; --fg: #1c1c1e; --m: #62626a; --line: #dcdcd6; --hi: #d9480f; color-scheme: light dark; }
 @media (prefers-color-scheme: dark) { :root { --bg: #161618; --fg: #e6e6e8; --m: #9a9aa2; --line: #36363c; --hi: #ff8a4c; } }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
 main { max-width: 1280px; margin: 0 auto; padding: 16px; }
 h1 { font-size: 22px; line-height: 1.3; margin: 8px 0 12px; }
-h2 { font-size: 20px; margin: 32px 0 4px; }
-h3 { font-size: 17px; margin: 0 0 10px; overflow-wrap: anywhere; }
+h2 { font-size: 19px; margin: 32px 0 8px; overflow-wrap: anywhere; }
+section h2 { margin: 20px 0 2px; }
 a { color: inherit; }
 .m { color: var(--m); font-size: 13px; font-weight: normal; }
 .intro { max-width: 72ch; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px 12px; }
+.tile { text-decoration: none; display: block; }
+.tile img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: var(--line); }
+.tile span { display: block; margin-top: 4px; font-size: 13px; line-height: 1.35; overflow-wrap: anywhere; }
+.tile:hover span { text-decoration: underline; }
 .bar { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 8px 0; border-bottom: 1px solid var(--line);
-  display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+  display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.bar .end { margin-left: auto; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .bar span { white-space: nowrap; }
 .off #zooms { display: none; }
-section { padding: 20px 0 8px; border-bottom: 1px solid var(--line); }
-.row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
-figure { margin: 0; }
-figcaption { margin-top: 4px; font-size: 14px; }
+.row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 12px; margin-top: 12px; }
+figure { margin: 0; display: grid; grid-row: span 3; grid-template-rows: subgrid; }
+figcaption { align-self: end; font-size: 14px; }
 .view { position: relative; cursor: grab; line-height: 0; }
 .view:active { cursor: grabbing; }
 .ov { width: 100%; height: auto; display: block; background: var(--line); }
 .hl { position: absolute; outline: 2px solid #fff; box-shadow: 0 0 0 3px rgba(0,0,0,.5); pointer-events: none; }
-.zoom { display: block; width: 100%; aspect-ratio: 4 / 3; margin-top: 6px; image-rendering: pixelated;
-  background: var(--line); }
+.zoom { display: block; width: 100%; aspect-ratio: 4 / 3; image-rendering: pixelated; background: var(--line); }
 .off .zoom, .off .hl { display: none; }
 button { font: inherit; font-size: 13px; color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 3px 9px; cursor: pointer; }
 button[aria-pressed=true] { border-color: var(--hi); color: var(--hi); }
-.ab { margin: 10px 0 0; }
-details { display: inline-block; margin-left: 8px; }
-summary { cursor: pointer; }
 #err { display: none; border-left: 3px solid var(--hi); padding-left: 10px; }
 @media (max-width: 700px) {
-  .row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .row { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 8px; }
   .row > .photo { grid-column: 1 / -1; }
+  .row > .photo .zoom { margin-bottom: 10px; }
 }
 </style>
 </head>
 <body>
 <main>
-<h1>The paperlesspaper app vs spectra6-dotgain</h1>
-<p class="intro">Images dithered for the OpenPaper L (1600&times;1200) two ways: by epdoptimize 1.3.0 the way the
-paperlesspaper app runs it, re-created from the app's source, and by spectra6-dotgain. Both are simulated as the panel
-would show them, with a model measured on a real panel in which darker pixels bleed into lighter neighbours. Our
-dithering is designed for that model, so it has the advantage here; the
-<a href="https://github.com/marinsokol5/spectra6-dotgain#results">README</a> has the tests on a real frame.</p>
-<p class="m intro">Under each image is a close-up of the white box on it. Drag the box, or click anywhere on an
-image, to move it in all three images of the row. Panel white is shown as screen white. The model's black is a little
-purple-blue in both simulations.</p>
 <p id="err" class="intro">This page reads its images' pixels, which browsers block for files opened from disk. Open it
 from a web server instead, for example <code>python3 -m http.server</code> in the repository folder.</p>
 <script>if (location.protocol === "file:") document.getElementById("err").style.display = "block";</script>
-<div class="bar"><button type="button" id="closeup" aria-pressed="true">Close-up</button>
-<span id="zooms"><button type="button" data-z="1">1&times;</button> <button type="button" data-z="2">2&times;</button> <button type="button" data-z="3">3&times;</button>
-<button type="button" data-z="4">4&times;</button> <span class="m">screen px per panel px</span></span></div>
+<div id="index">
+<h1>spectra6-dotgain vs the paperlesspaper app</h1>
+<p class="intro">On an E Ink Spectra 6 panel, a light pixel next to darker pixels looks darker than its ink. We measured
+this on a paperlesspaper OpenPaper L (13.3", 1600&times;1200): with 1, 2, 3 or 4 darker neighbours, 20, 27, 33 or 51 %
+of a pixel takes their colour. Yellow bleeds into white almost as much as black does, and green in fine patterns looks
+yellow-green.</p>
+<p class="intro">spectra6-dotgain dithers for this. It maps the photo to what the inks can show, then runs error
+diffusion that tries every ink for each pixel, predicts with the panel model how that pixel and its neighbours will
+look, and keeps the closest. Code: <a href="__CODE__spectra6_dotgain/target.py">tone and colour</a>,
+<a href="__CODE__spectra6_dotgain/mbed.py">dithering</a>, <a href="__CODE__spectra6_dotgain/panel.py">panel model</a>.
+The <a href="__CODE__README.md">README</a> has the measurements, the blind tests on a real frame and the limits.</p>
+<p class="intro">Click an image to see it three ways: the photo, epdoptimize 1.3.0 as the paperlesspaper app runs it
+(re-created from the app's source), and spectra6-dotgain. Both dithered versions are simulated with the panel model.
+Our dithering is designed for that model, so the simulation favours us.</p>
 <h2>paperlesspaper's sample images</h2>
-__SAMPLES__
+<div class="grid">__SAMPLE_TILES__</div>
 <h2>epdoptimize's demo images</h2>
-<p class="m intro">All of them except four that show the same picture as a sample above. Under each app image: how
-epdoptimize's <code>suggestCanvasProcessingOptions</code> classifies the image, and how it then dithers.</p>
-__GALLERY__
+<p class="m intro">All of them except four that show the same picture as a sample above.</p>
+<div class="grid">__GALLERY_TILES__</div>
 <p class="m">Sample images: paperlesspaper's (samples/NOTICE). Demo images: from epdoptimize (gallery/NOTICE). Both
 under their own terms.</p>
+</div>
+<div id="detail" hidden>
+<div class="bar"><a href="#" id="back">&larr; All images</a>
+<span><a href="#" id="prev">&larr; Previous</a> <span id="pos" class="m"></span> <a href="#" id="next">Next &rarr;</a></span>
+<span class="end"><button type="button" id="closeup" aria-pressed="true">Close-up</button>
+<span id="zooms"><button type="button" data-z="1">1&times;</button> <button type="button" data-z="2">2&times;</button>
+<button type="button" data-z="3">3&times;</button> <button type="button" data-z="4">4&times;</button>
+<span class="m">screen px per panel px</span></span></span></div>
+__SECTIONS__
+<p class="m intro">Under each image is a close-up of the white box on it. Drag the box, or click anywhere on an image,
+to move it in all three. Panel white is shown as screen white. The model's black is a little purple-blue in both
+simulations. Keys: &larr; and &rarr; for the previous and next image, Esc for all images.</p>
+</div>
 </main>
 <script type="module">
-import { abDevice, loadModel, render, srgb8, LINEAR, indices, pngRGB } from "./panel.js";
+import { loadModel, render, srgb8, LINEAR, indices } from "./panel.js";
 
 const f32 = Math.fround;
 const q = new URLSearchParams(location.search);
 let closeup = q.get("closeup") !== "off";
 let zoom = [1, 2, 3, 4].includes(+q.get("zoom")) ? +q.get("zoom") : 2;
+let current = null;
 
 function showState() {
   document.body.classList.toggle("off", !closeup);
@@ -314,8 +340,8 @@ function showState() {
 }
 function setState() {
   showState();
-  history.replaceState(null, "", `?closeup=${closeup ? "on" : "off"}&zoom=${zoom}`);
-  rows.forEach(r => r.drawZoom());
+  history.replaceState(null, "", `?closeup=${closeup ? "on" : "off"}&zoom=${zoom}${location.hash}`);
+  current?.drawZoom();
 }
 document.getElementById("closeup").addEventListener("click", () => { closeup = !closeup; setState(); });
 document.querySelectorAll("[data-z]").forEach(b => b.addEventListener("click", () => {
@@ -360,18 +386,21 @@ function overview(canvas, lin, W, H) {
 }
 
 const model = fetch("../spectra6_dotgain/panel-model.json").then(r => r.json()).then(loadModel);
+const tick = () => new Promise(r => setTimeout(r));
 
 class Row {
   constructor(sec) {
     this.sec = sec;
     this.name = sec.dataset.name;
+    this.title = sec.querySelector("h2").textContent;
     this.W = +sec.dataset.w;
     this.H = +sec.dataset.h;
     [this.cx, this.cy] = [0, this.H];  // the box starts in the bottom-left corner
     this.views = [...sec.querySelectorAll(".view")];
     this.data = null;
+    this.gen = 0;  // bumped on every draw and release, so a draw that is no longer wanted stops
     this.views.forEach(v => {
-      // mouse and pen drag; a touch scrolls the page instead, and a tap still moves the square (click)
+      // mouse and pen drag; a touch scrolls the page instead, and a tap still moves the box (click)
       v.addEventListener("pointerdown", ev => {
         if (ev.pointerType === "touch" || !closeup) return;
         v.setPointerCapture(ev.pointerId);
@@ -382,7 +411,6 @@ class Row {
       v.addEventListener("pointerup", () => { this.dragging = null; });
       v.addEventListener("click", ev => { if (closeup) this.moveTo(v, ev); });
     });
-    sec.querySelector(".abbtn").addEventListener("click", () => this.download());
   }
   at(v, ev) {
     const r = v.getBoundingClientRect();
@@ -408,25 +436,22 @@ class Row {
       height: `${100 * h / this.H}%`,
     }));
   }
-  async load() {
-    if (this.data) return this.data;
-    const sec = this.sec;
-    const [photo, app, ours] = await Promise.all([image(sec.dataset.photo), image(`img/${this.name}.app.png`),
-      image(`img/${this.name}.ours.png`)]);
-    this.data = { photo, idx: { app: deviceIndices(app, this.W, this.H), ours: deviceIndices(ours, this.W, this.H) } };
-    return this.data;
-  }
   async draw() {
-    const { photo, idx } = await this.load(), m = await model, ovs = this.sec.querySelectorAll(".ov");
-    const px = pixels(photo), lin = new Float32Array(this.W * this.H * 3);
+    const gen = ++this.gen, sec = this.sec;
+    this.mark();
+    const [photo, app, ours, m] = await Promise.all([image(sec.dataset.photo), image(`img/${this.name}.app.png`),
+      image(`img/${this.name}.ours.png`), model]);
+    if (gen !== this.gen) return;
+    this.data = { photo, idx: { app: deviceIndices(app, this.W, this.H), ours: deviceIndices(ours, this.W, this.H) } };
+    const ovs = sec.querySelectorAll(".ov"), px = pixels(photo), lin = new Float32Array(this.W * this.H * 3);
     for (let i = 0; i < this.W * this.H; i++) for (let c = 0; c < 3; c++) lin[i * 3 + c] = LINEAR[px[i * 4 + c]];
     overview(ovs[0], lin, this.W, this.H);
-    await new Promise(r => setTimeout(r));
-    overview(ovs[1], render(idx.app, this.W, this.H, m), this.W, this.H);
-    await new Promise(r => setTimeout(r));
-    overview(ovs[2], render(idx.ours, this.W, this.H, m), this.W, this.H);
-    this.drawn = true;
     await this.drawZoom();
+    for (const [k, v] of [[1, "app"], [2, "ours"]]) {
+      await tick();
+      if (gen !== this.gen) return;
+      overview(ovs[k], render(this.data.idx[v], this.W, this.H, m), this.W, this.H);
+    }
   }
   async drawZoom() {
     this.mark();
@@ -450,50 +475,56 @@ class Row {
     });
   }
   release() {
+    this.gen++;
     this.data = null;
-    this.drawn = false;
     this.sec.querySelectorAll("canvas").forEach(c => { c.width = 0; c.height = 0; });
-  }
-  async download() {
-    const { idx } = await this.load();
-    const [top, bottom] = this.sec.dataset.top === "ours" ? ["ours", "app"] : ["app", "ours"];
-    const { rgb, w, h } = abDevice(idx[top], idx[bottom], this.W, this.H);
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(await pngRGB(rgb, w, h));
-    a.download = `${this.name}.ab.png`;
-    a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 10000);
   }
 }
 
+// #name opens that image; no hash shows the gallery
 const rows = [...document.querySelectorAll("section[data-name]")].map(s => new Row(s));
-const bySec = new Map(rows.map(r => [r.sec, r]));
-// draw rows near the screen one at a time, and drop the decoded images of rows far away
-let queue = [], busy = false;
-async function pump() {
-  if (busy) return;
-  busy = true;
-  while (queue.length) {
-    const r = queue.shift();
-    if (r.near && !r.drawn) {
-      try { await r.draw(); } catch (e) { document.getElementById("err").style.display = "block"; queue = []; }
-    }
-    await new Promise(r => setTimeout(r));
-  }
-  busy = false;
+const byName = new Map(rows.map(r => [r.name, r]));
+const [index, detail, err] = ["index", "detail", "err"].map(id => document.getElementById(id));
+const TITLE = document.title;
+const hashOf = r => `#${encodeURIComponent(r.name)}`;
+function link(a, r) {
+  a.style.visibility = r ? "" : "hidden";
+  if (r) a.href = hashOf(r);
 }
-const near = new IntersectionObserver(es => es.forEach(e => {
-  const r = bySec.get(e.target);
-  r.near = e.isIntersecting;
-  if (r.near && !r.drawn) { queue.push(r); pump(); }
-}), { rootMargin: "100% 0px" });
-const far = new IntersectionObserver(es => es.forEach(e => {
-  const r = bySec.get(e.target);
-  if (!e.isIntersecting && r.data) r.release();
-}), { rootMargin: "400% 0px" });
-rows.forEach(r => { near.observe(r.sec); far.observe(r.sec); });
+function route() {
+  let name = "";
+  try { name = decodeURIComponent(location.hash.slice(1)); } catch {}
+  const r = byName.get(name) || null, last = current;
+  if (last && last !== r) { last.sec.hidden = true; last.release(); }
+  current = r;
+  index.hidden = !!r;
+  detail.hidden = !r;
+  if (r) {
+    const i = rows.indexOf(r);
+    r.sec.hidden = false;
+    document.getElementById("pos").textContent = `${i + 1} / ${rows.length}`;
+    link(document.getElementById("prev"), rows[i - 1]);
+    link(document.getElementById("next"), rows[i + 1]);
+    document.title = `${r.title} - spectra6-dotgain`;
+    scrollTo(0, 0);
+    if (r !== last) r.draw().catch(() => { err.style.display = "block"; });
+  } else {
+    document.title = TITLE;
+    if (last) document.querySelector(`.tile[data-name="${CSS.escape(last.name)}"]`)?.scrollIntoView({ block: "center" });
+  }
+}
+history.scrollRestoration = "manual";
+addEventListener("hashchange", route);
+route();
+addEventListener("keydown", ev => {
+  if (!current || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+  const i = rows.indexOf(current);
+  if (ev.key === "ArrowLeft" && i > 0) location.hash = hashOf(rows[i - 1]);
+  else if (ev.key === "ArrowRight" && i < rows.length - 1) location.hash = hashOf(rows[i + 1]);
+  else if (ev.key === "Escape") location.hash = "";
+});
 let t;
-addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => rows.forEach(r => r.drawZoom()), 200); });
+addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => current?.drawZoom(), 200); });
 </script>
 </body>
 </html>
@@ -507,7 +538,10 @@ def main():
                     help="only rewrite index.html, from scores.json and the device PNGs already in compare/img")
     a = ap.parse_args()
     IMG.mkdir(parents=True, exist_ok=True)
+    THUMB.mkdir(exist_ok=True)
     jobs = [("samples", f, t) for f, t in SAMPLES] + [("gallery", f, Path(f).stem) for f in GALLERY]
+    with ProcessPoolExecutor(a.workers) as ex:
+        list(ex.map(save_thumb, jobs))
     if a.page:
         per = json.loads((OUT / "scores.json").read_text())
         images = [meta(*j) | {"epdoptimize": per[Path(j[1]).stem]["epdoptimize"]} for j in jobs]
@@ -522,8 +556,11 @@ def main():
         per = {im["name"]: {k: {v: round(s, 2) for v, s in im["scores"][k].items()} for k in ("model", "flat")}
                | {"epdoptimize": im["epdoptimize"]} for im in images}
         (OUT / "scores.json").write_text(json.dumps({"mean": mean, **per}, indent=1) + "\n")
-    page = PAGE.replace("__SAMPLES__", "".join(section(im) for im in groups["samples"]))
-    (OUT / "index.html").write_text(page.replace("__GALLERY__", "".join(section(im) for im in groups["gallery"])))
+    page = (PAGE.replace("__CODE__", CODE)
+            .replace("__SAMPLE_TILES__", "".join(tile(im) for im in groups["samples"]))
+            .replace("__GALLERY_TILES__", "".join(tile(im) for im in groups["gallery"]))
+            .replace("__SECTIONS__", "".join(section(im) for im in images)))
+    (OUT / "index.html").write_text(page)
     print("wrote", OUT / "index.html")
 
 
