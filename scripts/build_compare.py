@@ -31,20 +31,19 @@ IMG = OUT / "img"
 NODE = ROOT / "scripts" / "epdoptimize_app.mjs"
 CROP = (200, 150)  # panel pixels (w, h) of a landscape crop; swapped for portrait images
 
-# file in samples/, title, upstream file (paperlesspaper/sample-images), crops: label and centre (x, y) in the photo
+# file in samples/ (sources in samples/NOTICE), title, crops: label and centre (x, y) in the photo
 SAMPLES = [
     ("portrait.jpg", "Portrait (AI-generated)",
-     "AI generated/Vercity_Dreamgaze_1960s_hippie_girl._technicolor_old_movie_film_eed08513-7f0e-4f02-9c7e-7c073ef45d57.png",
      [("eye and cheek", (570, 320)), ("lips", (790, 650)), ("hair in shadow", (1120, 840))]),
-    ("parade.jpg", "Parade", "General/_MG_9373.jpg",
+    ("parade.jpg", "Parade",
      [("face", (850, 690)), ("cords on black cloth", (800, 1000)), ("pale background", (1250, 200))]),
-    ("flags.jpg", "Flags", "General/_MG_0330.jpg",
+    ("flags.jpg", "Flags",
      [("stars on dark blue", (520, 380)), ("yellow and black", (590, 860)), ("sky", (1350, 230))]),
-    ("warehouse.jpg", "Warehouse at dusk", "13 inch/3.jpg",
+    ("warehouse.jpg", "Warehouse at dusk",
      [("brick and sign", (740, 600)), ("blue door in shadow", (150, 1100)), ("evening sky", (1110, 260))]),
-    ("signpost.jpg", "Signpost in snow", "13 inch/3 2.jpg",
+    ("signpost.jpg", "Signpost in snow",
      [("lettering", (370, 280)), ("green sign", (650, 920)), ("trees and snow", (280, 1380))]),
-    ("grey-ramp.png", "Grey ramp", "General/VerlaufGrau.png",
+    ("grey-ramp.png", "Grey ramp",
      [("dark end", (150, 100)), ("middle", (800, 290)), ("light steps", (1420, 1060))]),
 ]
 
@@ -181,7 +180,7 @@ def crop_box(centre, shape):
     return x0, y0, cw, chh
 
 
-def build_image(file, title, upstream, crops):
+def build_image(file, title, crops):
     name = Path(file).stem
     ref8 = np.asarray(resize_cover(Image.open(ROOT / "samples" / file)))
     idx = {"ours": dither(ref8)}
@@ -209,21 +208,21 @@ def build_image(file, title, upstream, crops):
     print(f"{name:10s} model: epdoptimize {scores['model']['epdoptimize']:5.2f} ours {scores['model']['ours']:5.2f}  "
           f"flat: epdoptimize {scores['flat']['epdoptimize']:5.2f} ours {scores['flat']['ours']:5.2f}  "
           f"{opts['imageKind']} {opts['options'].get('errorDiffusionMatrix')}", flush=True)
-    return {"name": name, "file": file, "title": title, "upstream": upstream, "w": ref8.shape[1], "h": ref8.shape[0],
+    return {"name": name, "file": file, "title": title, "w": ref8.shape[1], "h": ref8.shape[0],
             "scores": scores, "epdoptimize": opts, "ab": order,
             "crops": [{"label": lab, "box": b} for (lab, _), b in zip(crops, boxes)]}
 
 
 # ---------------------------------------------------------------------------------------------------- page
-COLS = [("original", "Photo"), ("epdoptimize", "epdoptimize 1.3.0, app settings"), ("ours", "spectra6-dotgain")]
-KERNELS = {"floydSteinberg": "Floyd-Steinberg", "stucki": "Stucki"}
+COLS = [("original", "Photo"), ("epdoptimize", "paperlesspaper app, re-created"), ("ours", "spectra6-dotgain")]
+KERNELS = {"stucki": "Stucki"}  # named only where epdoptimize's suggestion did not pick Floyd-Steinberg
 
 
 def section(im, lazy):
     n, W, H = im["name"], im["w"], im["h"]
     ld = ' loading="lazy"' if lazy else ""
     e = html.escape
-    kern = KERNELS.get(im["epdoptimize"]["options"].get("errorDiffusionMatrix"), "?")
+    kern = im["epdoptimize"]["options"].get("errorDiffusionMatrix")
     cw, chh = im["crops"][0]["box"][2:]
     boxes = "".join(
         f'<span class="box{" on" if r == 1 else ""}" data-r="{r}" style="left:{100 * x / W:.3f}%;'
@@ -231,28 +230,28 @@ def section(im, lazy):
         for r, (x, y, w, h) in enumerate((c["box"] for c in im["crops"]), 1))
     fars, crops = [], []
     for key, label in COLS:
+        sub = ""
         if key == "original":
-            sub = f'{W}&times;{H}, <a href="../samples/{e(im["file"])}">file</a>'
-        else:
-            sub = f'&Delta;E<sub>00</sub> {im["scores"]["model"][key]:.2f}'
-        kernel = f' <span class="m">({kern})</span>' if key == "epdoptimize" else ""
+            sub = f' <a class="m" href="../samples/{e(im["file"])}">file</a>'
+        elif key == "epdoptimize" and kern in KERNELS:
+            sub = f' <span class="m">({KERNELS[kern]} kernel)</span>'
         fars.append(f'<figure class="c {key}"><div class="view"><img src="img/{n}.{key}.webp"{ld} width="{W // 2}" '
                     f'height="{H // 2}" alt="{e(label)}: {e(im["title"])}">{boxes}</div>'
-                    f'<figcaption>{e(label)}{kernel}<br><span class="m">{sub}</span></figcaption></figure>')
+                    f'<figcaption>{e(label)}{sub}</figcaption></figure>')
         crops.append(f'<div class="c {key}"><div class="crop"><img src="img/{n}.1.{key}.png"{ld} data-col="{key}" '
-                     f'width="{cw}" height="{chh}" style="--w:{cw}" alt="{e(label)}, 1:1 detail"></div></div>')
+                     f'width="{cw}" height="{chh}" style="--w:{cw}" alt="{e(label)}, close-up"></div></div>')
     buttons = "".join(f'<button type="button" data-r="{r}" aria-pressed="{str(r == 1).lower()}">'
                       f'{e(c["label"])}</button>' for r, c in enumerate(im["crops"], 1))
     names = dict(COLS)
     top, bottom = im["ab"]
     return f"""
 <section id="{n}" data-name="{n}" data-boxes='{json.dumps([c["box"] for c in im["crops"]])}'>
-  <h2>{e(im["title"])} <span class="m">sample-images/{e(im["upstream"])}</span></h2>
+  <h2>{e(im["title"])}</h2>
   <div class="row">{"".join(fars)}</div>
-  <div class="regions"><span class="m">1:1 detail:</span> {buttons}</div>
+  <div class="regions"><span class="m">Close-up:</span> {buttons}</div>
   <div class="row">{"".join(crops)}</div>
-  <div class="ab m"><a href="img/{n}.ab.device.png">Stacked A/B device PNG</a> (the middle half of the photo
-  twice, one version above the other) <details><summary>which half is which</summary>top: {names[top]},
+  <div class="ab m"><a href="img/{n}.ab.device.png">A/B image</a> to send to a real frame: the middle of the photo
+  twice, one version above the other. <details><summary>Which is which</summary>top: {names[top]},
   bottom: {names[bottom]}</details></div>
 </section>"""
 
@@ -271,11 +270,9 @@ body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system
 main { max-width: 1280px; margin: 0 auto; padding: 16px; }
 h1 { font-size: 22px; line-height: 1.3; margin: 8px 0 12px; }
 h2 { font-size: 18px; margin: 0 0 10px; }
-h2 .m { overflow-wrap: anywhere; }
 a { color: inherit; }
 .m { color: var(--m); font-size: 13px; font-weight: normal; }
 .intro { max-width: 72ch; }
-.note { max-width: 72ch; border-left: 3px solid var(--hi); padding: 2px 0 2px 12px; }
 .zoom { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 8px 0; border-bottom: 1px solid var(--line); }
 .zoom span { white-space: nowrap; }
 section { padding: 20px 0 8px; border-bottom: 1px solid var(--line); }
@@ -302,24 +299,18 @@ summary { cursor: pointer; }
 </head>
 <body>
 <main>
-<h1>OpenPaper L: epdoptimize 1.3.0 as the paperlesspaper app runs it, and spectra6-dotgain</h1>
-<p class="intro">paperlesspaper's sample images at the panel's size (1600&times;1200, 150 ppi): the photo, epdoptimize
-1.3.0 with the settings the paperlesspaper app uses (the kernel its suggestion picked is in brackets), and
-spectra6-dotgain. The first row shows each whole image at half size, every pixel the linear-light average of 2&times;2
-panel pixels; click it to choose the 1:1 detail below. Panel white is shown as screen white. &Delta;E<sub>00</sub> is
-the mean S&#8209;CIELAB CIEDE2000 difference from the photo at 50 cm, lower is closer. Each image links a stacked A/B
-device PNG for a real frame; <code>python -m spectra6_dotgain photo.jpg out.png</code> makes a full-frame one.</p>
-<p class="note">Both dithered images are simulated with the same panel model, measured on one OpenPaper L: a lighter pixel
-loses part of its area to darker neighbours, yellow spreads into white, green in fine patterns reads yellow-green.
-Both show the model's black, which is purple-blue because the glare removed from the measured inks is assumed
-neutral. epdoptimize's own preview paints every pixel in a flat palette colour and cannot show any of this. Our
-dithering is designed for this model, so the pictures and these scores lean its way; the README has a score without
-the model and the real-frame A/B results.</p>
-<div class="zoom">Detail zoom <span class="m">(screen px per panel px)</span> <span><button type="button" data-z="1">1&times;</button>
+<h1>The paperlesspaper app vs spectra6-dotgain</h1>
+<p class="intro">Six of paperlesspaper's sample images dithered for the OpenPaper L (1600&times;1200) two ways: by
+epdoptimize 1.3.0 the way the paperlesspaper app runs it, re-created from the app's source, and by spectra6-dotgain.
+Both are simulated as the panel would show them, with a model measured on a real panel in which darker pixels bleed
+into lighter neighbours. Our dithering is designed for that model, so it has the advantage here; the
+<a href="https://github.com/marinsokol5/spectra6-dotgain#results">README</a> has the tests on a real frame.</p>
+<p class="m intro">Click a whole image to pick a close-up. Panel white is shown as screen white. The model's black is
+a little purple-blue in both simulations.</p>
+<div class="zoom">Close-up zoom <span><button type="button" data-z="1">1&times;</button>
 <button type="button" data-z="2">2&times;</button> <button type="button" data-z="3">3&times;</button></span></div>
 __SECTIONS__
-<p class="m">Built by scripts/build_compare.py. Sample images by paperlesspaper (see samples/NOTICE), not covered by
-this repository's license.</p>
+<p class="m">Sample images: paperlesspaper, under their own terms (samples/NOTICE).</p>
 </main>
 <script>
 const root = document.documentElement;
