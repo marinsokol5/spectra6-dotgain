@@ -1,25 +1,28 @@
 {
  "mean": {
-  "model": {
-   "epdoptimize": 19.27,
-   "ours": 12.41
-  },
-  "flat": {
-   "epdoptimize": 25.8,
-   "ours": 20.61
+  "samples": {
+   "model": {
+    "app": 19.27,
+    "ours": 12.41
+   },
+   "flat": {
+    "app": 25.8,
+    "ours": 20.61
+   }
   }
  },
  "portrait": {
   "model": {
-   "epdoptimize": 23.33,
+   "app": 23.33,
    "ours": 14.95
   },
   "flat": {
-   "epdoptimize": 32.22,
+   "app": 32.22,
    "ours": 25.95
   },
-  "epdoptimize_options": {
+  "epdoptimize": {
    "imageKind": "photo",
+   "confidence": 0.3212927758861317,
    "options": {
     "processingEngine": "js",
     "adjustmentEngine": "js",
@@ -32,15 +35,16 @@
  },
  "parade": {
   "model": {
-   "epdoptimize": 20.43,
+   "app": 20.43,
    "ours": 14.27
   },
   "flat": {
-   "epdoptimize": 27.5,
+   "app": 27.5,
    "ours": 23.76
   },
-  "epdoptimize_options": {
+  "epdoptimize": {
    "imageKind": "highContrastPhoto",
+   "confidence": 0.1190688068969139,
    "options": {
     "processingEngine": "js",
     "adjustmentEngine": "js",
@@ -53,15 +57,16 @@
  },
  "flags": {
   "model": {
-   "epdoptimize": 18.53,
+   "app": 18.53,
    "ours": 10.27
   },
   "flat": {
-   "epdoptimize": 25.12,
+   "app": 25.12,
    "ours": 18.38
   },
-  "epdoptimize_options": {
+  "epdoptimize": {
    "imageKind": "photo",
+   "confidence": 0.4913634699686229,
    "options": {
     "processingEngine": "js",
     "adjustmentEngine": "js",
@@ -74,15 +79,16 @@
  },
  "warehouse": {
   "model": {
-   "epdoptimize": 22.37,
+   "app": 22.37,
    "ours": 16.88
   },
   "flat": {
-   "epdoptimize": 30.63,
+   "app": 30.63,
    "ours": 25.88
   },
-  "epdoptimize_options": {
+  "epdoptimize": {
    "imageKind": "photo",
+   "confidence": 0.6547802327190768,
    "options": {
     "processingEngine": "js",
     "adjustmentEngine": "js",
@@ -95,15 +101,16 @@
  },
  "signpost": {
   "model": {
-   "epdoptimize": 11.55,
+   "app": 11.55,
    "ours": 6.7
   },
   "flat": {
-   "epdoptimize": 14.28,
+   "app": 14.28,
    "ours": 10.07
   },
-  "epdoptimize_options": {
+  "epdoptimize": {
    "imageKind": "flatIllustration",
+   "confidence": 0.745541408525618,
    "options": {
     "processingEngine": "js",
     "adjustmentEngine": "js",
@@ -116,15 +123,16 @@
  },
  "grey-ramp": {
   "model": {
-   "epdoptimize": 19.4,
+   "app": 19.4,
    "ours": 11.37
   },
   "flat": {
-   "epdoptimize": 25.08,
+   "app": 25.08,
    "ours": 19.6
   },
-  "epdoptimize_options": {
+  "epdoptimize": {
    "imageKind": "flatIllustration",
+   "confidence": 0.8999999999999999,
    "options": {
     "processingEngine": "js",
     "adjustmentEngine": "js",

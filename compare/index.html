@@ -5,37 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>spectra6-dotgain comparison</title>
 <style>
-:root { --bg: #fafaf8; --fg: #1c1c1e; --m: #62626a; --line: #dcdcd6; --hi: #d9480f; --z: 2; color-scheme: light dark; }
+:root { --bg: #fafaf8; --fg: #1c1c1e; --m: #62626a; --line: #dcdcd6; --hi: #d9480f; color-scheme: light dark; }
 @media (prefers-color-scheme: dark) { :root { --bg: #161618; --fg: #e6e6e8; --m: #9a9aa2; --line: #36363c; --hi: #ff8a4c; } }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
 main { max-width: 1280px; margin: 0 auto; padding: 16px; }
 h1 { font-size: 22px; line-height: 1.3; margin: 8px 0 12px; }
-h2 { font-size: 18px; margin: 0 0 10px; }
+h2 { font-size: 20px; margin: 32px 0 4px; }
+h3 { font-size: 17px; margin: 0 0 10px; overflow-wrap: anywhere; }
 a { color: inherit; }
 .m { color: var(--m); font-size: 13px; font-weight: normal; }
 .intro { max-width: 72ch; }
-.zoom { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 8px 0; border-bottom: 1px solid var(--line); }
-.zoom span { white-space: nowrap; }
+.bar { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 8px 0; border-bottom: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.bar span { white-space: nowrap; }
+.off #zooms { display: none; }
 section { padding: 20px 0 8px; border-bottom: 1px solid var(--line); }
 .row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
 figure { margin: 0; }
 figcaption { margin-top: 4px; font-size: 14px; }
 .view { position: relative; cursor: crosshair; line-height: 0; }
-.view img { width: 100%; height: auto; display: block; }
-.box { position: absolute; outline: 1px dashed rgba(255,255,255,.8); box-shadow: 0 0 0 1px rgba(0,0,0,.5); pointer-events: none; }
-.box.on { outline: 2px solid var(--hi); }
-.regions { margin: 14px 0 8px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.ov { width: 100%; height: auto; display: block; background: var(--line); }
+.inset { position: absolute; left: 0; bottom: 0; width: 40%; aspect-ratio: 1; image-rendering: pixelated;
+  border: 1px solid rgba(255,255,255,.9); box-shadow: 0 0 0 1px rgba(0,0,0,.45); pointer-events: none; }
+.hl { position: absolute; display: none; outline: 1px solid rgba(255,255,255,.75); box-shadow: 0 0 0 1px rgba(0,0,0,.35);
+  pointer-events: none; }
+.hover .hl { display: block; }
+.off .inset, .off .hl { display: none !important; }
 button { font: inherit; font-size: 13px; color: var(--fg); background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 3px 9px; cursor: pointer; }
 button[aria-pressed=true] { border-color: var(--hi); color: var(--hi); }
-.crop { overflow: auto; max-height: 75vh; line-height: 0; }
-.crop img { width: calc(var(--w) * var(--z) * 1px); max-width: none; height: auto; image-rendering: pixelated; }
 .ab { margin: 10px 0 0; }
 details { display: inline-block; margin-left: 8px; }
 summary { cursor: pointer; }
+#err { display: none; border-left: 3px solid var(--hi); padding-left: 10px; }
 @media (max-width: 700px) {
   .row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-  .row > .original { grid-column: 1 / -1; }
+  .row > .photo { grid-column: 1 / -1; }
 }
 </style>
 </head>
@@ -47,107 +52,249 @@ epdoptimize 1.3.0 the way the paperlesspaper app runs it, re-created from the ap
 Both are simulated as the panel would show them, with a model measured on a real panel in which darker pixels bleed
 into lighter neighbours. Our dithering is designed for that model, so it has the advantage here; the
 <a href="https://github.com/marinsokol5/spectra6-dotgain#results">README</a> has the tests on a real frame.</p>
-<p class="m intro">Click a whole image to pick a close-up. Panel white is shown as screen white. The model's black is
-a little purple-blue in both simulations.</p>
-<div class="zoom">Close-up zoom <span><button type="button" data-z="1">1&times;</button>
-<button type="button" data-z="2">2&times;</button> <button type="button" data-z="3">3&times;</button></span></div>
+<p class="m intro">The square in each image's corner is a close-up; click anywhere on an image to move it, for all
+three images of the row. Panel white is shown as screen white. The model's black is a little purple-blue in both
+simulations.</p>
+<p id="err" class="intro">This page reads its images' pixels, which browsers block for files opened from disk. Open it
+from a web server instead, for example <code>python3 -m http.server</code> in the repository folder.</p>
+<script>if (location.protocol === "file:") document.getElementById("err").style.display = "block";</script>
+<div class="bar"><button type="button" id="closeup" aria-pressed="true">Close-up</button>
+<span id="zooms"><button type="button" data-z="2">2&times;</button> <button type="button" data-z="3">3&times;</button>
+<button type="button" data-z="4">4&times;</button> <span class="m">screen px per panel px</span></span></div>
 
-<section id="portrait" data-name="portrait" data-boxes='[[470, 245, 200, 150], [690, 575, 200, 150], [1020, 765, 200, 150]]'>
-  <h2>Portrait (AI-generated)</h2>
-  <div class="row"><figure class="c original"><div class="view"><img src="img/portrait.original.webp" width="800" height="600" alt="Photo: Portrait (AI-generated)"><span class="box on" data-r="1" style="left:29.375%;top:20.417%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:43.125%;top:47.917%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:63.750%;top:63.750%;width:12.500%;height:12.500%"></span></div><figcaption>Photo <a class="m" href="../samples/portrait.jpg">file</a></figcaption></figure><figure class="c epdoptimize"><div class="view"><img src="img/portrait.epdoptimize.webp" width="800" height="600" alt="paperlesspaper app, re-created: Portrait (AI-generated)"><span class="box on" data-r="1" style="left:29.375%;top:20.417%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:43.125%;top:47.917%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:63.750%;top:63.750%;width:12.500%;height:12.500%"></span></div><figcaption>paperlesspaper app, re-created</figcaption></figure><figure class="c ours"><div class="view"><img src="img/portrait.ours.webp" width="800" height="600" alt="spectra6-dotgain: Portrait (AI-generated)"><span class="box on" data-r="1" style="left:29.375%;top:20.417%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:43.125%;top:47.917%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:63.750%;top:63.750%;width:12.500%;height:12.500%"></span></div><figcaption>spectra6-dotgain</figcaption></figure></div>
-  <div class="regions"><span class="m">Close-up:</span> <button type="button" data-r="1" aria-pressed="true">eye and cheek</button><button type="button" data-r="2" aria-pressed="false">lips</button><button type="button" data-r="3" aria-pressed="false">hair in shadow</button></div>
-  <div class="row"><div class="c original"><div class="crop"><img src="img/portrait.1.original.png" data-col="original" width="200" height="150" style="--w:200" alt="Photo, close-up"></div></div><div class="c epdoptimize"><div class="crop"><img src="img/portrait.1.epdoptimize.png" data-col="epdoptimize" width="200" height="150" style="--w:200" alt="paperlesspaper app, re-created, close-up"></div></div><div class="c ours"><div class="crop"><img src="img/portrait.1.ours.png" data-col="ours" width="200" height="150" style="--w:200" alt="spectra6-dotgain, close-up"></div></div></div>
-  <div class="ab m"><a href="img/portrait.ab.device.png">A/B image</a> to send to a real frame: the middle of the photo
-  twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+<section id="portrait" data-name="portrait" data-w="1600" data-h="1200" data-cx="565" data-cy="292"
+  data-photo="../samples/portrait.jpg" data-top="app">
+  <h3>Portrait (AI-generated)</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../samples/portrait.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.32; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
   bottom: spectra6-dotgain</details></div>
 </section>
-<section id="parade" data-name="parade" data-boxes='[[750, 615, 200, 150], [700, 925, 200, 150], [1150, 125, 200, 150]]'>
-  <h2>Parade</h2>
-  <div class="row"><figure class="c original"><div class="view"><img src="img/parade.original.webp" loading="lazy" width="800" height="600" alt="Photo: Parade"><span class="box on" data-r="1" style="left:46.875%;top:51.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:43.750%;top:77.083%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:71.875%;top:10.417%;width:12.500%;height:12.500%"></span></div><figcaption>Photo <a class="m" href="../samples/parade.jpg">file</a></figcaption></figure><figure class="c epdoptimize"><div class="view"><img src="img/parade.epdoptimize.webp" loading="lazy" width="800" height="600" alt="paperlesspaper app, re-created: Parade"><span class="box on" data-r="1" style="left:46.875%;top:51.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:43.750%;top:77.083%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:71.875%;top:10.417%;width:12.500%;height:12.500%"></span></div><figcaption>paperlesspaper app, re-created <span class="m">(Stucki kernel)</span></figcaption></figure><figure class="c ours"><div class="view"><img src="img/parade.ours.webp" loading="lazy" width="800" height="600" alt="spectra6-dotgain: Parade"><span class="box on" data-r="1" style="left:46.875%;top:51.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:43.750%;top:77.083%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:71.875%;top:10.417%;width:12.500%;height:12.500%"></span></div><figcaption>spectra6-dotgain</figcaption></figure></div>
-  <div class="regions"><span class="m">Close-up:</span> <button type="button" data-r="1" aria-pressed="true">face</button><button type="button" data-r="2" aria-pressed="false">cords on black cloth</button><button type="button" data-r="3" aria-pressed="false">pale background</button></div>
-  <div class="row"><div class="c original"><div class="crop"><img src="img/parade.1.original.png" loading="lazy" data-col="original" width="200" height="150" style="--w:200" alt="Photo, close-up"></div></div><div class="c epdoptimize"><div class="crop"><img src="img/parade.1.epdoptimize.png" loading="lazy" data-col="epdoptimize" width="200" height="150" style="--w:200" alt="paperlesspaper app, re-created, close-up"></div></div><div class="c ours"><div class="crop"><img src="img/parade.1.ours.png" loading="lazy" data-col="ours" width="200" height="150" style="--w:200" alt="spectra6-dotgain, close-up"></div></div></div>
-  <div class="ab m"><a href="img/parade.ab.device.png">A/B image</a> to send to a real frame: the middle of the photo
-  twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+<section id="parade" data-name="parade" data-w="1600" data-h="1200" data-cx="850" data-cy="690"
+  data-photo="../samples/parade.jpg" data-top="ours">
+  <h3>Parade</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../samples/parade.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: high-contrast photo, confidence 0.12; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
   bottom: paperlesspaper app, re-created</details></div>
 </section>
-<section id="flags" data-name="flags" data-boxes='[[420, 305, 200, 150], [490, 785, 200, 150], [1250, 155, 200, 150]]'>
-  <h2>Flags</h2>
-  <div class="row"><figure class="c original"><div class="view"><img src="img/flags.original.webp" loading="lazy" width="800" height="600" alt="Photo: Flags"><span class="box on" data-r="1" style="left:26.250%;top:25.417%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:30.625%;top:65.417%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:78.125%;top:12.917%;width:12.500%;height:12.500%"></span></div><figcaption>Photo <a class="m" href="../samples/flags.jpg">file</a></figcaption></figure><figure class="c epdoptimize"><div class="view"><img src="img/flags.epdoptimize.webp" loading="lazy" width="800" height="600" alt="paperlesspaper app, re-created: Flags"><span class="box on" data-r="1" style="left:26.250%;top:25.417%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:30.625%;top:65.417%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:78.125%;top:12.917%;width:12.500%;height:12.500%"></span></div><figcaption>paperlesspaper app, re-created</figcaption></figure><figure class="c ours"><div class="view"><img src="img/flags.ours.webp" loading="lazy" width="800" height="600" alt="spectra6-dotgain: Flags"><span class="box on" data-r="1" style="left:26.250%;top:25.417%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:30.625%;top:65.417%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:78.125%;top:12.917%;width:12.500%;height:12.500%"></span></div><figcaption>spectra6-dotgain</figcaption></figure></div>
-  <div class="regions"><span class="m">Close-up:</span> <button type="button" data-r="1" aria-pressed="true">stars on dark blue</button><button type="button" data-r="2" aria-pressed="false">yellow and black</button><button type="button" data-r="3" aria-pressed="false">sky</button></div>
-  <div class="row"><div class="c original"><div class="crop"><img src="img/flags.1.original.png" loading="lazy" data-col="original" width="200" height="150" style="--w:200" alt="Photo, close-up"></div></div><div class="c epdoptimize"><div class="crop"><img src="img/flags.1.epdoptimize.png" loading="lazy" data-col="epdoptimize" width="200" height="150" style="--w:200" alt="paperlesspaper app, re-created, close-up"></div></div><div class="c ours"><div class="crop"><img src="img/flags.1.ours.png" loading="lazy" data-col="ours" width="200" height="150" style="--w:200" alt="spectra6-dotgain, close-up"></div></div></div>
-  <div class="ab m"><a href="img/flags.ab.device.png">A/B image</a> to send to a real frame: the middle of the photo
-  twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+<section id="flags" data-name="flags" data-w="1600" data-h="1200" data-cx="520" data-cy="380"
+  data-photo="../samples/flags.jpg" data-top="app">
+  <h3>Flags</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../samples/flags.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.49; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
   bottom: spectra6-dotgain</details></div>
 </section>
-<section id="warehouse" data-name="warehouse" data-boxes='[[665, 500, 150, 200], [75, 1000, 150, 200], [1035, 160, 150, 200]]'>
-  <h2>Warehouse at dusk</h2>
-  <div class="row"><figure class="c original"><div class="view"><img src="img/warehouse.original.webp" loading="lazy" width="600" height="800" alt="Photo: Warehouse at dusk"><span class="box on" data-r="1" style="left:55.417%;top:31.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:6.250%;top:62.500%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:86.250%;top:10.000%;width:12.500%;height:12.500%"></span></div><figcaption>Photo <a class="m" href="../samples/warehouse.jpg">file</a></figcaption></figure><figure class="c epdoptimize"><div class="view"><img src="img/warehouse.epdoptimize.webp" loading="lazy" width="600" height="800" alt="paperlesspaper app, re-created: Warehouse at dusk"><span class="box on" data-r="1" style="left:55.417%;top:31.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:6.250%;top:62.500%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:86.250%;top:10.000%;width:12.500%;height:12.500%"></span></div><figcaption>paperlesspaper app, re-created</figcaption></figure><figure class="c ours"><div class="view"><img src="img/warehouse.ours.webp" loading="lazy" width="600" height="800" alt="spectra6-dotgain: Warehouse at dusk"><span class="box on" data-r="1" style="left:55.417%;top:31.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:6.250%;top:62.500%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:86.250%;top:10.000%;width:12.500%;height:12.500%"></span></div><figcaption>spectra6-dotgain</figcaption></figure></div>
-  <div class="regions"><span class="m">Close-up:</span> <button type="button" data-r="1" aria-pressed="true">brick and sign</button><button type="button" data-r="2" aria-pressed="false">blue door in shadow</button><button type="button" data-r="3" aria-pressed="false">evening sky</button></div>
-  <div class="row"><div class="c original"><div class="crop"><img src="img/warehouse.1.original.png" loading="lazy" data-col="original" width="150" height="200" style="--w:150" alt="Photo, close-up"></div></div><div class="c epdoptimize"><div class="crop"><img src="img/warehouse.1.epdoptimize.png" loading="lazy" data-col="epdoptimize" width="150" height="200" style="--w:150" alt="paperlesspaper app, re-created, close-up"></div></div><div class="c ours"><div class="crop"><img src="img/warehouse.1.ours.png" loading="lazy" data-col="ours" width="150" height="200" style="--w:150" alt="spectra6-dotgain, close-up"></div></div></div>
-  <div class="ab m"><a href="img/warehouse.ab.device.png">A/B image</a> to send to a real frame: the middle of the photo
-  twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+<section id="warehouse" data-name="warehouse" data-w="1200" data-h="1600" data-cx="740" data-cy="600"
+  data-photo="../samples/warehouse.jpg" data-top="ours">
+  <h3>Warehouse at dusk</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../samples/warehouse.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.65; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
   bottom: paperlesspaper app, re-created</details></div>
 </section>
-<section id="signpost" data-name="signpost" data-boxes='[[295, 180, 150, 200], [575, 820, 150, 200], [205, 1280, 150, 200]]'>
-  <h2>Signpost in snow</h2>
-  <div class="row"><figure class="c original"><div class="view"><img src="img/signpost.original.webp" loading="lazy" width="600" height="800" alt="Photo: Signpost in snow"><span class="box on" data-r="1" style="left:24.583%;top:11.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:47.917%;top:51.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:17.083%;top:80.000%;width:12.500%;height:12.500%"></span></div><figcaption>Photo <a class="m" href="../samples/signpost.jpg">file</a></figcaption></figure><figure class="c epdoptimize"><div class="view"><img src="img/signpost.epdoptimize.webp" loading="lazy" width="600" height="800" alt="paperlesspaper app, re-created: Signpost in snow"><span class="box on" data-r="1" style="left:24.583%;top:11.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:47.917%;top:51.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:17.083%;top:80.000%;width:12.500%;height:12.500%"></span></div><figcaption>paperlesspaper app, re-created</figcaption></figure><figure class="c ours"><div class="view"><img src="img/signpost.ours.webp" loading="lazy" width="600" height="800" alt="spectra6-dotgain: Signpost in snow"><span class="box on" data-r="1" style="left:24.583%;top:11.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:47.917%;top:51.250%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:17.083%;top:80.000%;width:12.500%;height:12.500%"></span></div><figcaption>spectra6-dotgain</figcaption></figure></div>
-  <div class="regions"><span class="m">Close-up:</span> <button type="button" data-r="1" aria-pressed="true">lettering</button><button type="button" data-r="2" aria-pressed="false">green sign</button><button type="button" data-r="3" aria-pressed="false">trees and snow</button></div>
-  <div class="row"><div class="c original"><div class="crop"><img src="img/signpost.1.original.png" loading="lazy" data-col="original" width="150" height="200" style="--w:150" alt="Photo, close-up"></div></div><div class="c epdoptimize"><div class="crop"><img src="img/signpost.1.epdoptimize.png" loading="lazy" data-col="epdoptimize" width="150" height="200" style="--w:150" alt="paperlesspaper app, re-created, close-up"></div></div><div class="c ours"><div class="crop"><img src="img/signpost.1.ours.png" loading="lazy" data-col="ours" width="150" height="200" style="--w:150" alt="spectra6-dotgain, close-up"></div></div></div>
-  <div class="ab m"><a href="img/signpost.ab.device.png">A/B image</a> to send to a real frame: the middle of the photo
-  twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+<section id="signpost" data-name="signpost" data-w="1200" data-h="1600" data-cx="370" data-cy="280"
+  data-photo="../samples/signpost.jpg" data-top="ours">
+  <h3>Signpost in snow</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../samples/signpost.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.75; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
   bottom: paperlesspaper app, re-created</details></div>
 </section>
-<section id="grey-ramp" data-name="grey-ramp" data-boxes='[[50, 25, 200, 150], [700, 215, 200, 150], [1320, 985, 200, 150]]'>
-  <h2>Grey ramp</h2>
-  <div class="row"><figure class="c original"><div class="view"><img src="img/grey-ramp.original.webp" loading="lazy" width="800" height="600" alt="Photo: Grey ramp"><span class="box on" data-r="1" style="left:3.125%;top:2.083%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:43.750%;top:17.917%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:82.500%;top:82.083%;width:12.500%;height:12.500%"></span></div><figcaption>Photo <a class="m" href="../samples/grey-ramp.png">file</a></figcaption></figure><figure class="c epdoptimize"><div class="view"><img src="img/grey-ramp.epdoptimize.webp" loading="lazy" width="800" height="600" alt="paperlesspaper app, re-created: Grey ramp"><span class="box on" data-r="1" style="left:3.125%;top:2.083%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:43.750%;top:17.917%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:82.500%;top:82.083%;width:12.500%;height:12.500%"></span></div><figcaption>paperlesspaper app, re-created</figcaption></figure><figure class="c ours"><div class="view"><img src="img/grey-ramp.ours.webp" loading="lazy" width="800" height="600" alt="spectra6-dotgain: Grey ramp"><span class="box on" data-r="1" style="left:3.125%;top:2.083%;width:12.500%;height:12.500%"></span><span class="box" data-r="2" style="left:43.750%;top:17.917%;width:12.500%;height:12.500%"></span><span class="box" data-r="3" style="left:82.500%;top:82.083%;width:12.500%;height:12.500%"></span></div><figcaption>spectra6-dotgain</figcaption></figure></div>
-  <div class="regions"><span class="m">Close-up:</span> <button type="button" data-r="1" aria-pressed="true">dark end</button><button type="button" data-r="2" aria-pressed="false">middle</button><button type="button" data-r="3" aria-pressed="false">light steps</button></div>
-  <div class="row"><div class="c original"><div class="crop"><img src="img/grey-ramp.1.original.png" loading="lazy" data-col="original" width="200" height="150" style="--w:200" alt="Photo, close-up"></div></div><div class="c epdoptimize"><div class="crop"><img src="img/grey-ramp.1.epdoptimize.png" loading="lazy" data-col="epdoptimize" width="200" height="150" style="--w:200" alt="paperlesspaper app, re-created, close-up"></div></div><div class="c ours"><div class="crop"><img src="img/grey-ramp.1.ours.png" loading="lazy" data-col="ours" width="200" height="150" style="--w:200" alt="spectra6-dotgain, close-up"></div></div></div>
-  <div class="ab m"><a href="img/grey-ramp.ab.device.png">A/B image</a> to send to a real frame: the middle of the photo
-  twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+<section id="grey-ramp" data-name="grey-ramp" data-w="1600" data-h="1200" data-cx="150" data-cy="100"
+  data-photo="../samples/grey-ramp.png" data-top="ours">
+  <h3>Grey ramp</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../samples/grey-ramp.png">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.90; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
   bottom: paperlesspaper app, re-created</details></div>
 </section>
 <p class="m">Sample images: paperlesspaper, under their own terms (samples/NOTICE).</p>
 </main>
-<script>
-const root = document.documentElement;
-function setZoom(z) {
-  root.style.setProperty("--z", z);
-  document.querySelectorAll("[data-z]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.z === z)));
-}
-setZoom(innerWidth >= 900 ? 2 : 1);
-document.querySelectorAll("[data-z]").forEach(b => b.addEventListener("click", () => setZoom(+b.dataset.z)));
+<script type="module">
+import { abDevice, loadModel, render, srgb8, LINEAR, indices, pngRGB } from "./panel.js";
 
-document.querySelectorAll("section[data-name]").forEach(sec => {
-  const name = sec.dataset.name, boxes = JSON.parse(sec.dataset.boxes);
-  const crops = [...sec.querySelectorAll(".crop")];
-  function pick(r) {
-    sec.querySelectorAll(".crop img").forEach(img => {
-      img.src = `img/${name}.${r}.${img.dataset.col}.png`;
-    });
-    sec.querySelectorAll(".box").forEach(b => b.classList.toggle("on", +b.dataset.r === r));
-    sec.querySelectorAll(".regions button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.r === r)));
-  }
-  sec.querySelectorAll(".regions button").forEach(b => b.addEventListener("click", () => pick(+b.dataset.r)));
-  sec.querySelectorAll(".view").forEach(v => v.addEventListener("click", ev => {
-    const rc = v.getBoundingClientRect(), img = v.querySelector("img");
-    const x = (ev.clientX - rc.left) / rc.width * img.naturalWidth * 2;
-    const y = (ev.clientY - rc.top) / rc.height * img.naturalHeight * 2;
-    let best = 1, bd = Infinity;
-    boxes.forEach(([x0, y0, w, h], i) => {
-      const d = (x0 + w / 2 - x) ** 2 + (y0 + h / 2 - y) ** 2;
-      if (d < bd) { bd = d; best = i + 1; }
-    });
-    pick(best);
-  }));
-  // the three crops scroll together
-  let busy = false;
-  crops.forEach(c => c.addEventListener("scroll", () => {
-    if (busy) return;
-    busy = true;
-    crops.forEach(o => { if (o !== c) { o.scrollLeft = c.scrollLeft; o.scrollTop = c.scrollTop; } });
-    requestAnimationFrame(() => { busy = false; });
-  }));
+const f32 = Math.fround;
+const q = new URLSearchParams(location.search);
+let closeup = q.get("closeup") !== "off";
+let zoom = [2, 3, 4].includes(+q.get("zoom")) ? +q.get("zoom") : 3;
+
+function showState() {
+  document.body.classList.toggle("off", !closeup);
+  document.getElementById("closeup").setAttribute("aria-pressed", String(closeup));
+  document.querySelectorAll("[data-z]").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.z === zoom)));
+}
+function setState() {
+  showState();
+  history.replaceState(null, "", `?closeup=${closeup ? "on" : "off"}&zoom=${zoom}`);
+  rows.forEach(r => r.drawInsets());
+}
+document.getElementById("closeup").addEventListener("click", () => { closeup = !closeup; setState(); });
+document.querySelectorAll("[data-z]").forEach(b => b.addEventListener("click", () => {
+  zoom = +b.dataset.z;
+  setState();
+}));
+showState();
+
+const image = src => new Promise((ok, fail) => {
+  const im = new Image();
+  im.onload = () => ok(im);
+  im.onerror = () => fail(new Error(src));
+  im.src = src;
 });
+function pixels(im) {
+  const c = document.createElement("canvas");
+  c.width = im.naturalWidth;
+  c.height = im.naturalHeight;
+  const x = c.getContext("2d", { willReadFrequently: true });
+  x.drawImage(im, 0, 0);
+  return x.getImageData(0, 0, c.width, c.height).data;
+}
+// device image (panel orientation) -> index map in the photo's orientation
+function deviceIndices(im, W, H) {
+  const dev = indices(pixels(im)), dw = im.naturalWidth;
+  if (W === dw) return dev;
+  const out = new Uint8Array(W * H);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) out[y * W + x] = dev[x * dw + (dw - 1 - y)];
+  return out;
+}
+// 2x2 panel pixels -> 1 overview pixel, averaged in linear light
+function overview(canvas, lin, W, H) {
+  const w = W >> 1, h = H >> 1, out = new ImageData(w, h);
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) for (let c = 0; c < 3; c++) {
+    const a = (2 * y * W + 2 * x) * 3 + c, b = a + W * 3;
+    out.data[(y * w + x) * 4 + c] = srgb8(f32(f32(f32(f32(lin[a] + lin[a + 3]) + lin[b]) + lin[b + 3]) * 0.25));
+  }
+  for (let i = 3; i < out.data.length; i += 4) out.data[i] = 255;
+  canvas.width = w;
+  canvas.height = h;
+  canvas.getContext("2d").putImageData(out, 0, 0);
+}
+
+const model = fetch("../spectra6_dotgain/panel-model.json").then(r => r.json()).then(loadModel);
+
+class Row {
+  constructor(sec) {
+    this.sec = sec;
+    this.name = sec.dataset.name;
+    this.W = +sec.dataset.w;
+    this.H = +sec.dataset.h;
+    this.cx = +sec.dataset.cx;
+    this.cy = +sec.dataset.cy;
+    this.views = [...sec.querySelectorAll(".view")];
+    this.data = null;
+    this.views.forEach(v => {
+      v.addEventListener("click", ev => { [this.cx, this.cy] = this.at(v, ev); this.drawInsets(); this.hover(v, ev); });
+      v.addEventListener("mousemove", ev => this.hover(v, ev));
+      v.addEventListener("mouseleave", () => sec.classList.remove("hover"));
+    });
+    sec.querySelector(".abbtn").addEventListener("click", () => this.download());
+  }
+  at(v, ev) {
+    const r = v.getBoundingClientRect();
+    return [(ev.clientX - r.left) / r.width * this.W, (ev.clientY - r.top) / r.height * this.H];
+  }
+  region(cx, cy) {
+    const css = this.views[0].clientWidth * 0.4, s = Math.max(8, Math.min(Math.round(css / zoom), this.W, this.H));
+    const x0 = Math.min(Math.max(Math.round(cx - s / 2), 0), this.W - s);
+    const y0 = Math.min(Math.max(Math.round(cy - s / 2), 0), this.H - s);
+    return [x0, y0, s];
+  }
+  hover(v, ev) {
+    if (!closeup) return;
+    const [x0, y0, s] = this.region(...this.at(v, ev));
+    this.sec.querySelectorAll(".hl").forEach(h => Object.assign(h.style, {
+      left: `${100 * x0 / this.W}%`, top: `${100 * y0 / this.H}%`, width: `${100 * s / this.W}%`,
+      height: `${100 * s / this.H}%`,
+    }));
+    this.sec.classList.add("hover");
+  }
+  async load() {
+    if (this.data) return this.data;
+    const sec = this.sec;
+    const [photo, app, ours] = await Promise.all([image(sec.dataset.photo), image(`img/${this.name}.app.png`),
+      image(`img/${this.name}.ours.png`)]);
+    this.data = { photo, idx: { app: deviceIndices(app, this.W, this.H), ours: deviceIndices(ours, this.W, this.H) } };
+    return this.data;
+  }
+  async draw() {
+    const { photo, idx } = await this.load(), m = await model, ovs = this.sec.querySelectorAll(".ov");
+    const px = pixels(photo), lin = new Float32Array(this.W * this.H * 3);
+    for (let i = 0; i < this.W * this.H; i++) for (let c = 0; c < 3; c++) lin[i * 3 + c] = LINEAR[px[i * 4 + c]];
+    overview(ovs[0], lin, this.W, this.H);
+    await new Promise(r => setTimeout(r));
+    overview(ovs[1], render(idx.app, this.W, this.H, m), this.W, this.H);
+    await new Promise(r => setTimeout(r));
+    overview(ovs[2], render(idx.ours, this.W, this.H, m), this.W, this.H);
+    this.drawn = true;
+    await this.drawInsets();
+  }
+  async drawInsets() {
+    if (!this.data || !closeup) return;
+    const m = await model, { photo, idx } = this.data, [x0, y0, s] = this.region(this.cx, this.cy);
+    const insets = this.sec.querySelectorAll(".inset");
+    insets.forEach(c => { c.width = s; c.height = s; });
+    insets[0].getContext("2d").drawImage(photo, x0, y0, s, s, 0, 0, s, s);
+    ["app", "ours"].forEach((v, k) => {
+      // the region plus a 1 px border (clamped at the image's edges), rendered, border dropped
+      const n = s + 2, patch = new Uint8Array(n * n);
+      for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+        const yy = Math.min(Math.max(y0 + y - 1, 0), this.H - 1), xx = Math.min(Math.max(x0 + x - 1, 0), this.W - 1);
+        patch[y * n + x] = idx[v][yy * this.W + xx];
+      }
+      const lin = render(patch, n, n, m), out = new ImageData(s, s);
+      for (let y = 0; y < s; y++) for (let x = 0; x < s; x++) for (let c = 0; c < 4; c++) {
+        out.data[(y * s + x) * 4 + c] = c === 3 ? 255 : srgb8(lin[((y + 1) * n + x + 1) * 3 + c]);
+      }
+      insets[k + 1].getContext("2d").putImageData(out, 0, 0);
+    });
+  }
+  release() {
+    this.data = null;
+    this.drawn = false;
+    this.sec.querySelectorAll("canvas").forEach(c => { c.width = 0; c.height = 0; });
+  }
+  async download() {
+    const { idx } = await this.load();
+    const [top, bottom] = this.sec.dataset.top === "ours" ? ["ours", "app"] : ["app", "ours"];
+    const { rgb, w, h } = abDevice(idx[top], idx[bottom], this.W, this.H);
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(await pngRGB(rgb, w, h));
+    a.download = `${this.name}.ab.png`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+  }
+}
+
+const rows = [...document.querySelectorAll("section[data-name]")].map(s => new Row(s));
+const bySec = new Map(rows.map(r => [r.sec, r]));
+// draw rows near the screen one at a time, and drop the decoded images of rows far away
+let queue = [], busy = false;
+async function pump() {
+  if (busy) return;
+  busy = true;
+  while (queue.length) {
+    const r = queue.shift();
+    if (r.near && !r.drawn) {
+      try { await r.draw(); } catch (e) { document.getElementById("err").style.display = "block"; queue = []; }
+    }
+    await new Promise(r => setTimeout(r));
+  }
+  busy = false;
+}
+const near = new IntersectionObserver(es => es.forEach(e => {
+  const r = bySec.get(e.target);
+  r.near = e.isIntersecting;
+  if (r.near && !r.drawn) { queue.push(r); pump(); }
+}), { rootMargin: "100% 0px" });
+const far = new IntersectionObserver(es => es.forEach(e => {
+  const r = bySec.get(e.target);
+  if (!e.isIntersecting && r.data) r.release();
+}), { rootMargin: "400% 0px" });
+rows.forEach(r => { near.observe(r.sec); far.observe(r.sec); });
+let t;
+addEventListener("resize", () => { clearTimeout(t); t = setTimeout(() => rows.forEach(r => r.drawInsets()), 200); });
 </script>
 </body>
 </html>

@@ -69,7 +69,9 @@ portrait. It, and the page's A/B images, can be sent to a frame through paperles
 `preview.png` is the panel model's simulation.
 
 To rebuild the page (needs Node): `(cd scripts && npm ci) && .venv/bin/python scripts/build_compare.py`. On an M2
-Mac it reproduces `compare/` byte for byte.
+Mac it reproduces `compare/` byte for byte. The page stores only the device images and simulates them in the browser
+with `compare/panel.js`, a port of the panel model that gives the same 8-bit pixels as `panel.py`. Browsers allow that
+only over http, so to view it locally run `python3 -m http.server` here and open `localhost:8000/compare/`.
 
 ## How the page re-creates the app
 

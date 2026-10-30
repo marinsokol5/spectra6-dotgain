@@ -9,7 +9,8 @@
 // The input PNG is already at panel size and resampled like the app's editor (see build_compare.py).
 // A minimal canvas shim stands in for the browser canvas (no node-canvas needed).
 //
-// usage: node epdoptimize_app.mjs in.png device.png      (prints the dither options used, as JSON)
+// usage: node epdoptimize_app.mjs in.png device.png      (prints the image kind, its confidence and the dither
+//        options used, as JSON)
 import fs from "node:fs";
 import { PNG } from "pngjs";
 import * as epd from "epdoptimize";
@@ -82,4 +83,5 @@ const out = new PNG({ width: device.width, height: device.height });
 out.data = Buffer.from(device._data.buffer, device._data.byteOffset, device._data.byteLength);
 fs.writeFileSync(devicePath, PNG.sync.write(out));
 const { palette: _p, ...printable } = options;
-console.log(JSON.stringify({ imageKind: suggestion.imageKind ?? suggestion.classification?.kind, options: printable }));
+console.log(JSON.stringify({ imageKind: suggestion.imageKind ?? suggestion.classification?.kind,
+  confidence: suggestion.classification?.confidence, options: printable }));
