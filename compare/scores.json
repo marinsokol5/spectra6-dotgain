@@ -1,0 +1,138 @@
+{
+ "mean": {
+  "model": {
+   "epdoptimize": 19.27,
+   "ours": 12.41
+  },
+  "flat": {
+   "epdoptimize": 25.8,
+   "ours": 20.61
+  }
+ },
+ "portrait": {
+  "model": {
+   "epdoptimize": 23.33,
+   "ours": 14.95
+  },
+  "flat": {
+   "epdoptimize": 32.22,
+   "ours": 25.95
+  },
+  "epdoptimize_options": {
+   "imageKind": "photo",
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "parade": {
+  "model": {
+   "epdoptimize": 20.43,
+   "ours": 14.27
+  },
+  "flat": {
+   "epdoptimize": 27.5,
+   "ours": 23.76
+  },
+  "epdoptimize_options": {
+   "imageKind": "highContrastPhoto",
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "flags": {
+  "model": {
+   "epdoptimize": 18.53,
+   "ours": 10.27
+  },
+  "flat": {
+   "epdoptimize": 25.12,
+   "ours": 18.38
+  },
+  "epdoptimize_options": {
+   "imageKind": "photo",
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "warehouse": {
+  "model": {
+   "epdoptimize": 22.37,
+   "ours": 16.88
+  },
+  "flat": {
+   "epdoptimize": 30.63,
+   "ours": 25.88
+  },
+  "epdoptimize_options": {
+   "imageKind": "photo",
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "signpost": {
+  "model": {
+   "epdoptimize": 11.55,
+   "ours": 6.7
+  },
+  "flat": {
+   "epdoptimize": 14.28,
+   "ours": 10.07
+  },
+  "epdoptimize_options": {
+   "imageKind": "flatIllustration",
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "grey-ramp": {
+  "model": {
+   "epdoptimize": 19.4,
+   "ours": 11.37
+  },
+  "flat": {
+   "epdoptimize": 25.08,
+   "ours": 19.6
+  },
+  "epdoptimize_options": {
+   "imageKind": "flatIllustration",
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ }
+}
