@@ -9,6 +9,16 @@
     "app": 25.8,
     "ours": 20.61
    }
+  },
+  "gallery": {
+   "model": {
+    "app": 18.84,
+    "ours": 13.04
+   },
+   "flat": {
+    "app": 25.22,
+    "ours": 20.83
+   }
   }
  },
  "portrait": {
@@ -133,6 +143,1411 @@
   "epdoptimize": {
    "imageKind": "flatIllustration",
    "confidence": 0.8999999999999999,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "Colorfile": {
+  "model": {
+   "app": 21.0,
+   "ours": 21.89
+  },
+  "flat": {
+   "app": 25.45,
+   "ours": 26.14
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 0.6522385803160061,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "Regenbogen": {
+  "model": {
+   "app": 20.52,
+   "ours": 22.78
+  },
+  "flat": {
+   "app": 24.61,
+   "ours": 26.31
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "affiche-plm-geneve": {
+  "model": {
+   "app": 17.38,
+   "ours": 8.42
+  },
+  "flat": {
+   "app": 22.68,
+   "ours": 15.68
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.5284217395670441,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "albert-rene-grenier-1858-1925-met-dt2167": {
+  "model": {
+   "app": 22.5,
+   "ours": 13.53
+  },
+  "flat": {
+   "app": 30.91,
+   "ours": 24.51
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.35314543647546115,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "baby": {
+  "model": {
+   "app": 15.47,
+   "ours": 8.79
+  },
+  "flat": {
+   "app": 17.65,
+   "ours": 12.84
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 0.8098193192831251,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "baby_outline": {
+  "model": {
+   "app": 9.26,
+   "ours": 6.6
+  },
+  "flat": {
+   "app": 10.77,
+   "ours": 9.07
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "balcony": {
+  "model": {
+   "app": 22.52,
+   "ours": 13.04
+  },
+  "flat": {
+   "app": 30.21,
+   "ours": 23.3
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.10423566741090418,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "be-kind-to-books-club-lccn2011645392": {
+  "model": {
+   "app": 22.69,
+   "ours": 15.27
+  },
+  "flat": {
+   "app": 32.05,
+   "ours": 26.55
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 0.7038857255884937,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "black": {
+  "model": {
+   "app": 3.25,
+   "ours": 2.78
+  },
+  "flat": {
+   "app": 4.51,
+   "ours": 4.0
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "blackandwhite_illustration": {
+  "model": {
+   "app": 19.05,
+   "ours": 15.32
+  },
+  "flat": {
+   "app": 28.64,
+   "ours": 25.01
+  },
+  "epdoptimize": {
+   "imageKind": "textOrUi",
+   "confidence": 0.35357353971467265,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "lab",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "buildings": {
+  "model": {
+   "app": 22.48,
+   "ours": 14.65
+  },
+  "flat": {
+   "app": 31.88,
+   "ours": 25.84
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.4310612097093587,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "color_compare": {
+  "model": {
+   "app": 24.9,
+   "ours": 26.39
+  },
+  "flat": {
+   "app": 31.03,
+   "ours": 32.47
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 0.9429567134732071,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "color_compare_jpg_artefact": {
+  "model": {
+   "app": 25.12,
+   "ours": 26.32
+  },
+  "flat": {
+   "app": 31.63,
+   "ours": 32.82
+  },
+  "epdoptimize": {
+   "imageKind": "highContrastPhoto",
+   "confidence": 0.34094242453140855,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "color_screenshot": {
+  "model": {
+   "app": 25.76,
+   "ours": 23.19
+  },
+  "flat": {
+   "app": 36.97,
+   "ours": 34.93
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 0.8597024070536099,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "doctor": {
+  "model": {
+   "app": 3.25,
+   "ours": 3.83
+  },
+  "flat": {
+   "app": 4.64,
+   "ours": 5.07
+  },
+  "epdoptimize": {
+   "imageKind": "textOrUi",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "lab",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "quantizationOnly"
+   }
+  }
+ },
+ "doll-and-buggy-parade-wpa-recreation-project-dist-no-2-lccn98508975": {
+  "model": {
+   "app": 17.94,
+   "ours": 8.56
+  },
+  "flat": {
+   "app": 23.17,
+   "ours": 16.89
+  },
+  "epdoptimize": {
+   "imageKind": "lineArt",
+   "confidence": 0.2548294919767937,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "f-Sarah": {
+  "model": {
+   "app": 19.61,
+   "ours": 11.55
+  },
+  "flat": {
+   "app": 25.46,
+   "ours": 19.84
+  },
+  "epdoptimize": {
+   "imageKind": "highContrastPhoto",
+   "confidence": 0.4393141326852603,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "f": {
+  "model": {
+   "app": 21.81,
+   "ours": 14.16
+  },
+  "flat": {
+   "app": 28.52,
+   "ours": 23.12
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.3908970491186179,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "face-detail-15th-century-painting-from-tibet-central-tibetan-mahakala-protector-": {
+  "model": {
+   "app": 22.94,
+   "ours": 13.74
+  },
+  "flat": {
+   "app": 32.1,
+   "ours": 24.81
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.2869371789310464,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "franz-marc-resting-horses-google-art-project": {
+  "model": {
+   "app": 22.59,
+   "ours": 12.17
+  },
+  "flat": {
+   "app": 30.26,
+   "ours": 22.75
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.25503892897691083,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "halloween-roller-skating-carnival-wpa-poster-1936": {
+  "model": {
+   "app": 20.28,
+   "ours": 15.2
+  },
+  "flat": {
+   "app": 29.29,
+   "ours": 25.44
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 0.6468542982693027,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "hammer": {
+  "model": {
+   "app": 4.98,
+   "ours": 2.91
+  },
+  "flat": {
+   "app": 6.94,
+   "ours": 5.0
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "hands": {
+  "model": {
+   "app": 18.76,
+   "ours": 9.72
+  },
+  "flat": {
+   "app": 24.44,
+   "ours": 17.78
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.1314777695535505,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "harmonica-contest-on-the-mall-central-park-lccn94504459": {
+  "model": {
+   "app": 26.9,
+   "ours": 17.64
+  },
+  "flat": {
+   "app": 37.9,
+   "ours": 28.92
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.029412139540052618,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "harper-s-august-met-dp823644": {
+  "model": {
+   "app": 16.06,
+   "ours": 6.84
+  },
+  "flat": {
+   "app": 21.09,
+   "ours": 14.6
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.15722899034958182,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "harry-herzog-first-foreign-trade-zone-wpa-poster-1937": {
+  "model": {
+   "app": 19.65,
+   "ours": 13.52
+  },
+  "flat": {
+   "app": 27.14,
+   "ours": 22.43
+  },
+  "epdoptimize": {
+   "imageKind": "highContrastPhoto",
+   "confidence": 0.46829138474238174,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "henri-de-toulouse-lautrec-006": {
+  "model": {
+   "app": 20.27,
+   "ours": 8.66
+  },
+  "flat": {
+   "app": 27.84,
+   "ours": 17.7
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.11920280488627966,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "holiday_photo": {
+  "model": {
+   "app": 20.68,
+   "ours": 11.86
+  },
+  "flat": {
+   "app": 27.45,
+   "ours": 20.98
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.3378674353865101,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "illustration": {
+  "model": {
+   "app": 17.91,
+   "ours": 16.72
+  },
+  "flat": {
+   "app": 28.6,
+   "ours": 25.36
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 0.4400086046395335,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "info": {
+  "model": {
+   "app": 8.98,
+   "ours": 9.09
+  },
+  "flat": {
+   "app": 12.29,
+   "ours": 12.11
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "iphone_mockup": {
+  "model": {
+   "app": 4.69,
+   "ours": 2.77
+  },
+  "flat": {
+   "app": 7.11,
+   "ours": 5.89
+  },
+  "epdoptimize": {
+   "imageKind": "lineArt",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "lab",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "quantizationOnly"
+   }
+  }
+ },
+ "kalender-7-zoll": {
+  "model": {
+   "app": 11.25,
+   "ours": 10.14
+  },
+  "flat": {
+   "app": 14.85,
+   "ours": 14.04
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "landscape-jpg": {
+  "model": {
+   "app": 21.53,
+   "ours": 14.67
+  },
+  "flat": {
+   "app": 28.85,
+   "ours": 23.78
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.32740942189382105,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "landscape-png": {
+  "model": {
+   "app": 21.26,
+   "ours": 13.41
+  },
+  "flat": {
+   "app": 29.11,
+   "ours": 23.73
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.28408233722787957,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "littledog": {
+  "model": {
+   "app": 23.4,
+   "ours": 14.67
+  },
+  "flat": {
+   "app": 32.65,
+   "ours": 27.14
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.19220023784622842,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "master-of-flemalle-portrait-of-a-fat-man-google-art-project-331318": {
+  "model": {
+   "app": 21.2,
+   "ours": 13.51
+  },
+  "flat": {
+   "app": 29.25,
+   "ours": 23.68
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.328750702141001,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "medication": {
+  "model": {
+   "app": 17.66,
+   "ours": 21.52
+  },
+  "flat": {
+   "app": 21.22,
+   "ours": 23.51
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "old_men": {
+  "model": {
+   "app": 13.92,
+   "ours": 5.86
+  },
+  "flat": {
+   "app": 17.37,
+   "ours": 11.67
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.045032554135896796,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "paint": {
+  "model": {
+   "app": 23.04,
+   "ours": 18.07
+  },
+  "flat": {
+   "app": 32.45,
+   "ours": 29.46
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.7903147144169571,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "paint_oversaturated": {
+  "model": {
+   "app": 22.13,
+   "ours": 18.62
+  },
+  "flat": {
+   "app": 28.28,
+   "ours": 25.56
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.7493415330093793,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "painting": {
+  "model": {
+   "app": 17.6,
+   "ours": 13.19
+  },
+  "flat": {
+   "app": 22.65,
+   "ours": 19.42
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.31999957607798346,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "person": {
+  "model": {
+   "app": 18.55,
+   "ours": 9.81
+  },
+  "flat": {
+   "app": 24.46,
+   "ours": 18.08
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.43534692650354456,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "person2": {
+  "model": {
+   "app": 20.05,
+   "ours": 10.97
+  },
+  "flat": {
+   "app": 26.28,
+   "ours": 20.05
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.05233553147977377,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "pflege": {
+  "model": {
+   "app": 11.98,
+   "ours": 11.4
+  },
+  "flat": {
+   "app": 15.8,
+   "ours": 15.54
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "photo_suboptimallight": {
+  "model": {
+   "app": 18.45,
+   "ours": 10.19
+  },
+  "flat": {
+   "app": 23.01,
+   "ours": 17.59
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.16872596701781073,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "photo_with_red": {
+  "model": {
+   "app": 17.96,
+   "ours": 10.31
+  },
+  "flat": {
+   "app": 24.6,
+   "ours": 18.7
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.29891931783381986,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "photo_workshop": {
+  "model": {
+   "app": 16.01,
+   "ours": 7.39
+  },
+  "flat": {
+   "app": 20.46,
+   "ours": 14.46
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.4008317694914112,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "pixelart": {
+  "model": {
+   "app": 21.78,
+   "ours": 15.24
+  },
+  "flat": {
+   "app": 29.85,
+   "ours": 25.29
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.09720327134416518,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "professional_photo": {
+  "model": {
+   "app": 22.79,
+   "ours": 16.34
+  },
+  "flat": {
+   "app": 31.76,
+   "ours": 27.49
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 0.40082733837501416,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "rainbow": {
+  "model": {
+   "app": 27.45,
+   "ours": 19.11
+  },
+  "flat": {
+   "app": 32.3,
+   "ours": 25.96
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.10488266769970667,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "rainbox-steps": {
+  "model": {
+   "app": 23.5,
+   "ours": 16.6
+  },
+  "flat": {
+   "app": 27.8,
+   "ours": 20.44
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 0.731537558739651,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "regular_photo": {
+  "model": {
+   "app": 21.29,
+   "ours": 11.58
+  },
+  "flat": {
+   "app": 28.92,
+   "ours": 21.61
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.3986468153488003,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "schiff": {
+  "model": {
+   "app": 24.05,
+   "ours": 16.6
+  },
+  "flat": {
+   "app": 32.06,
+   "ours": 26.6
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.8324485064487062,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "stucki",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "screen-cat": {
+  "model": {
+   "app": 11.81,
+   "ours": 6.5
+  },
+  "flat": {
+   "app": 15.84,
+   "ours": 11.06
+  },
+  "epdoptimize": {
+   "imageKind": "textOrUi",
+   "confidence": 0.6104092236589447,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "lab",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "the-chap-book": {
+  "model": {
+   "app": 24.56,
+   "ours": 16.86
+  },
+  "flat": {
+   "app": 35.22,
+   "ours": 29.22
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.11813355066657416,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "titian-cardinal-pietro-bembo-google-art-project": {
+  "model": {
+   "app": 25.1,
+   "ours": 17.49
+  },
+  "flat": {
+   "app": 37.01,
+   "ours": 30.97
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.08552250565245745,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "unwanted-dithering-on-e-ink-spectrum-6-displays": {
+  "model": {
+   "app": 22.69,
+   "ours": 25.85
+  },
+  "flat": {
+   "app": 28.33,
+   "ours": 31.36
+  },
+  "epdoptimize": {
+   "imageKind": "flatIllustration",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "utagawa-kuniyoshi-image-of-a-kabuki-actor-on-a-folding-fan-google-art-project": {
+  "model": {
+   "app": 23.52,
+   "ours": 14.73
+  },
+  "flat": {
+   "app": 31.85,
+   "ours": 25.7
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.30350853713561743,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "van-gogh-starry-night-google-art-project": {
+  "model": {
+   "app": 21.02,
+   "ours": 12.76
+  },
+  "flat": {
+   "app": 30.07,
+   "ours": 23.39
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.22306757270023958,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "vincent-van-gogh-self-portrait-google-art-project": {
+  "model": {
+   "app": 17.78,
+   "ours": 6.57
+  },
+  "flat": {
+   "app": 21.66,
+   "ours": 14.64
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.025816365501012406,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "westfield-athenaeum-federal-art-project-water-color-show-lccn98513161": {
+  "model": {
+   "app": 19.25,
+   "ours": 10.68
+  },
+  "flat": {
+   "app": 26.64,
+   "ours": 19.32
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.257165643737971,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "workshops": {
+  "model": {
+   "app": 8.58,
+   "ours": 7.8
+  },
+  "flat": {
+   "app": 12.78,
+   "ours": 12.28
+  },
+  "epdoptimize": {
+   "imageKind": "textOrUi",
+   "confidence": 1,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "lab",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "quantizationOnly"
+   }
+  }
+ },
+ "wpa-federal-art-project-paintings-barnstable-high-school-hyannis-lccn98513147": {
+  "model": {
+   "app": 18.25,
+   "ours": 10.17
+  },
+  "flat": {
+   "app": 25.22,
+   "ours": 18.19
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.22341903481958503,
+   "options": {
+    "processingEngine": "js",
+    "adjustmentEngine": "js",
+    "colorMatching": "rgb",
+    "errorDiffusionMatrix": "floydSteinberg",
+    "ditheringType": "errorDiffusion",
+    "serpentine": true
+   }
+  }
+ },
+ "wpa-index-of-american-design-exhibition-lccn98513148": {
+  "model": {
+   "app": 16.83,
+   "ours": 8.0
+  },
+  "flat": {
+   "app": 22.39,
+   "ours": 15.18
+  },
+  "epdoptimize": {
+   "imageKind": "photo",
+   "confidence": 0.013604085331447968,
    "options": {
     "processingEngine": "js",
     "adjustmentEngine": "js",

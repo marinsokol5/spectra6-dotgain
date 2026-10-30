@@ -1,0 +1,12 @@
+The images in this folder are epdoptimize's demo images: https://github.com/paperlesspaper/epdoptimize,
+commit 8643a93, path examples/sampleImages/. They are used as published there. epdoptimize's code is
+Apache-2.0; the images keep their own terms, which we have not checked image by image. Several file names
+point to museum and library collections (met, lccn, google-art-project).
+
+Four of the 68 are left out because they show the same picture as one of samples/: VerlaufGrau.png
+(grey-ramp), blackandwhitesoldiers.jpg (parade), flags.jpg (flags) and sign.jpg (signpost).
+
+Each was cover-cropped to 4:3 and resized to the panel size in linear light (Lanczos) with
+spectra6_dotgain.prep.resize_cover, and saved without metadata as JPEG (quality 85, 4:4:4), or as PNG
+where that is smaller (flat graphics). A file keeps its upstream name with the new extension, except
+landscape.jpg and landscape.png, which became landscape-jpg.jpg and landscape-png.jpg.

@@ -1,5 +1,5 @@
 """Build compare/: our dithering next to epdoptimize 1.3.0 as the paperlesspaper app runs it, for the images in
-samples/.
+samples/ and gallery/.
 
     (cd scripts && npm ci)                          # epdoptimize 1.3.0, pinned in package-lock.json
     python scripts/build_compare.py [--workers 3]   # about a minute per image and worker
@@ -42,6 +42,8 @@ SAMPLES = [
     ("signpost.jpg", "Signpost in snow", (370, 280)),
     ("grey-ramp.png", "Grey ramp", (150, 100)),
 ]
+# gallery/: epdoptimize's demo images (gallery/NOTICE); the close-up starts in the middle
+GALLERY = sorted(p.name for p in (ROOT / "gallery").iterdir() if p.suffix in (".jpg", ".png"))
 
 # ---------------------------------------------------------------------------------------------------- epdoptimize
 
@@ -173,7 +175,7 @@ def build_image(job):
           f"flat: app {scores['flat']['app']:5.2f} ours {scores['flat']['ours']:5.2f}  {opts['imageKind']} "
           f"{opts['options'].get('errorDiffusionMatrix')}", flush=True)
     return {"name": name, "folder": folder, "file": file, "title": title, "w": W, "h": H,
-            "cx": centre[0], "cy": centre[1],
+            "cx": centre[0] if centre else W // 2, "cy": centre[1] if centre else H // 2,
             "scores": scores, "epdoptimize": opts, "ab": ("ours", "app") if ours_top else ("app", "ours")}
 
 
@@ -269,10 +271,10 @@ summary { cursor: pointer; }
 <body>
 <main>
 <h1>The paperlesspaper app vs spectra6-dotgain</h1>
-<p class="intro">Six of paperlesspaper's sample images dithered for the OpenPaper L (1600&times;1200) two ways: by
-epdoptimize 1.3.0 the way the paperlesspaper app runs it, re-created from the app's source, and by spectra6-dotgain.
-Both are simulated as the panel would show them, with a model measured on a real panel in which darker pixels bleed
-into lighter neighbours. Our dithering is designed for that model, so it has the advantage here; the
+<p class="intro">Images dithered for the OpenPaper L (1600&times;1200) two ways: by epdoptimize 1.3.0 the way the
+paperlesspaper app runs it, re-created from the app's source, and by spectra6-dotgain. Both are simulated as the panel
+would show them, with a model measured on a real panel in which darker pixels bleed into lighter neighbours. Our
+dithering is designed for that model, so it has the advantage here; the
 <a href="https://github.com/marinsokol5/spectra6-dotgain#results">README</a> has the tests on a real frame.</p>
 <p class="m intro">The square in each image's corner is a close-up; click anywhere on an image to move it, for all
 three images of the row. Panel white is shown as screen white. The model's black is a little purple-blue in both
@@ -283,8 +285,14 @@ from a web server instead, for example <code>python3 -m http.server</code> in th
 <div class="bar"><button type="button" id="closeup" aria-pressed="true">Close-up</button>
 <span id="zooms"><button type="button" data-z="2">2&times;</button> <button type="button" data-z="3">3&times;</button>
 <button type="button" data-z="4">4&times;</button> <span class="m">screen px per panel px</span></span></div>
+<h2>paperlesspaper's sample images</h2>
 __SAMPLES__
-<p class="m">Sample images: paperlesspaper, under their own terms (samples/NOTICE).</p>
+<h2>epdoptimize's demo images</h2>
+<p class="m intro">All of them except four that show the same picture as a sample above. Under each app image: how
+epdoptimize's <code>suggestCanvasProcessingOptions</code> classifies the image, and how it then dithers.</p>
+__GALLERY__
+<p class="m">Sample images: paperlesspaper's (samples/NOTICE). Demo images: from epdoptimize (gallery/NOTICE). Both
+under their own terms.</p>
 </main>
 <script type="module">
 import { abDevice, loadModel, render, srgb8, LINEAR, indices, pngRGB } from "./panel.js";
@@ -480,16 +488,18 @@ def main():
     ap.add_argument("--workers", type=int, default=3)
     a = ap.parse_args()
     IMG.mkdir(parents=True, exist_ok=True)
-    jobs = [("samples", f, t, c) for f, t, c in SAMPLES]
+    jobs = [("samples", f, t, c) for f, t, c in SAMPLES] + [("gallery", f, Path(f).stem, None) for f in GALLERY]
     with ProcessPoolExecutor(a.workers) as ex:
         images = list(ex.map(build_image, jobs))
-    groups = {"samples": images}
+    groups = {"samples": [im for im in images if im["folder"] == "samples"],
+              "gallery": [im for im in images if im["folder"] == "gallery"]}
     mean = {g: {k: {v: round(float(np.mean([im["scores"][k][v] for im in ims])), 2) for v in ("app", "ours")}
                 for k in ("model", "flat")} for g, ims in groups.items()}
     per = {im["name"]: {k: {v: round(s, 2) for v, s in im["scores"][k].items()} for k in ("model", "flat")}
            | {"epdoptimize": im["epdoptimize"]} for im in images}
     (OUT / "scores.json").write_text(json.dumps({"mean": mean, **per}, indent=1) + "\n")
-    (OUT / "index.html").write_text(PAGE.replace("__SAMPLES__", "".join(section(im) for im in images)))
+    page = PAGE.replace("__SAMPLES__", "".join(section(im) for im in groups["samples"]))
+    (OUT / "index.html").write_text(page.replace("__GALLERY__", "".join(section(im) for im in groups["gallery"])))
     print("wrote", OUT / "index.html")
 
 

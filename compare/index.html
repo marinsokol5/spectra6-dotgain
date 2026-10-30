@@ -47,10 +47,10 @@ summary { cursor: pointer; }
 <body>
 <main>
 <h1>The paperlesspaper app vs spectra6-dotgain</h1>
-<p class="intro">Six of paperlesspaper's sample images dithered for the OpenPaper L (1600&times;1200) two ways: by
-epdoptimize 1.3.0 the way the paperlesspaper app runs it, re-created from the app's source, and by spectra6-dotgain.
-Both are simulated as the panel would show them, with a model measured on a real panel in which darker pixels bleed
-into lighter neighbours. Our dithering is designed for that model, so it has the advantage here; the
+<p class="intro">Images dithered for the OpenPaper L (1600&times;1200) two ways: by epdoptimize 1.3.0 the way the
+paperlesspaper app runs it, re-created from the app's source, and by spectra6-dotgain. Both are simulated as the panel
+would show them, with a model measured on a real panel in which darker pixels bleed into lighter neighbours. Our
+dithering is designed for that model, so it has the advantage here; the
 <a href="https://github.com/marinsokol5/spectra6-dotgain#results">README</a> has the tests on a real frame.</p>
 <p class="m intro">The square in each image's corner is a close-up; click anywhere on an image to move it, for all
 three images of the row. Panel white is shown as screen white. The model's black is a little purple-blue in both
@@ -61,6 +61,7 @@ from a web server instead, for example <code>python3 -m http.server</code> in th
 <div class="bar"><button type="button" id="closeup" aria-pressed="true">Close-up</button>
 <span id="zooms"><button type="button" data-z="2">2&times;</button> <button type="button" data-z="3">3&times;</button>
 <button type="button" data-z="4">4&times;</button> <span class="m">screen px per panel px</span></span></div>
+<h2>paperlesspaper's sample images</h2>
 
 <section id="portrait" data-name="portrait" data-w="1600" data-h="1200" data-cx="565" data-cy="292"
   data-photo="../samples/portrait.jpg" data-top="app">
@@ -110,7 +111,524 @@ from a web server instead, for example <code>python3 -m http.server</code> in th
   photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
   bottom: paperlesspaper app, re-created</details></div>
 </section>
-<p class="m">Sample images: paperlesspaper, under their own terms (samples/NOTICE).</p>
+<h2>epdoptimize's demo images</h2>
+<p class="m intro">All of them except four that show the same picture as a sample above. Under each app image: how
+epdoptimize's <code>suggestCanvasProcessingOptions</code> classifies the image, and how it then dithers.</p>
+
+<section id="Colorfile" data-name="Colorfile" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/Colorfile.jpg" data-top="app">
+  <h3>Colorfile</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/Colorfile.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.65; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="Regenbogen" data-name="Regenbogen" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/Regenbogen.png" data-top="app">
+  <h3>Regenbogen</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/Regenbogen.png">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 1.00; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="affiche-plm-geneve" data-name="affiche-plm-geneve" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/affiche-plm-geneve.jpg" data-top="app">
+  <h3>affiche-plm-geneve</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/affiche-plm-geneve.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.53; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="albert-rene-grenier-1858-1925-met-dt2167" data-name="albert-rene-grenier-1858-1925-met-dt2167" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/albert-rene-grenier-1858-1925-met-dt2167.jpg" data-top="app">
+  <h3>albert-rene-grenier-1858-1925-met-dt2167</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/albert-rene-grenier-1858-1925-met-dt2167.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.35; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="baby" data-name="baby" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/baby.jpg" data-top="app">
+  <h3>baby</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/baby.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.81; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="baby_outline" data-name="baby_outline" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/baby_outline.jpg" data-top="ours">
+  <h3>baby_outline</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/baby_outline.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 1.00; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="balcony" data-name="balcony" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/balcony.jpg" data-top="ours">
+  <h3>balcony</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/balcony.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.10; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="be-kind-to-books-club-lccn2011645392" data-name="be-kind-to-books-club-lccn2011645392" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/be-kind-to-books-club-lccn2011645392.jpg" data-top="app">
+  <h3>be-kind-to-books-club-lccn2011645392</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/be-kind-to-books-club-lccn2011645392.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.70; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="black" data-name="black" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/black.png" data-top="ours">
+  <h3>black</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/black.png">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 1.00; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="blackandwhite_illustration" data-name="blackandwhite_illustration" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/blackandwhite_illustration.jpg" data-top="ours">
+  <h3>blackandwhite_illustration</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/blackandwhite_illustration.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: text or UI, confidence 0.35; Floyd-Steinberg, colours matched in Lab</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="buildings" data-name="buildings" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/buildings.jpg" data-top="ours">
+  <h3>buildings</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/buildings.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.43; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="color_compare" data-name="color_compare" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/color_compare.png" data-top="app">
+  <h3>color_compare</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/color_compare.png">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.94; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="color_compare_jpg_artefact" data-name="color_compare_jpg_artefact" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/color_compare_jpg_artefact.jpg" data-top="app">
+  <h3>color_compare_jpg_artefact</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/color_compare_jpg_artefact.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: high-contrast photo, confidence 0.34; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="color_screenshot" data-name="color_screenshot" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/color_screenshot.jpg" data-top="app">
+  <h3>color_screenshot</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/color_screenshot.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.86; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="doctor" data-name="doctor" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/doctor.png" data-top="ours">
+  <h3>doctor</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/doctor.png">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: text or UI, confidence 1.00; no dithering, nearest colour, colours matched in Lab</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="doll-and-buggy-parade-wpa-recreation-project-dist-no-2-lccn98508975" data-name="doll-and-buggy-parade-wpa-recreation-project-dist-no-2-lccn98508975" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/doll-and-buggy-parade-wpa-recreation-project-dist-no-2-lccn98508975.jpg" data-top="ours">
+  <h3>doll-and-buggy-parade-wpa-recreation-project-dist-no-2-lccn98508975</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/doll-and-buggy-parade-wpa-recreation-project-dist-no-2-lccn98508975.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: line art, confidence 0.25; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="f-Sarah" data-name="f-Sarah" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/f-Sarah.jpg" data-top="ours">
+  <h3>f-Sarah</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/f-Sarah.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: high-contrast photo, confidence 0.44; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="f" data-name="f" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/f.jpg" data-top="app">
+  <h3>f</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/f.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.39; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="face-detail-15th-century-painting-from-tibet-central-tibetan-mahakala-protector-" data-name="face-detail-15th-century-painting-from-tibet-central-tibetan-mahakala-protector-" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/face-detail-15th-century-painting-from-tibet-central-tibetan-mahakala-protector-.jpg" data-top="app">
+  <h3>face-detail-15th-century-painting-from-tibet-central-tibetan-mahakala-protector-</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/face-detail-15th-century-painting-from-tibet-central-tibetan-mahakala-protector-.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.29; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="franz-marc-resting-horses-google-art-project" data-name="franz-marc-resting-horses-google-art-project" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/franz-marc-resting-horses-google-art-project.jpg" data-top="app">
+  <h3>franz-marc-resting-horses-google-art-project</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/franz-marc-resting-horses-google-art-project.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.26; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="halloween-roller-skating-carnival-wpa-poster-1936" data-name="halloween-roller-skating-carnival-wpa-poster-1936" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/halloween-roller-skating-carnival-wpa-poster-1936.jpg" data-top="app">
+  <h3>halloween-roller-skating-carnival-wpa-poster-1936</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/halloween-roller-skating-carnival-wpa-poster-1936.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.65; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="hammer" data-name="hammer" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/hammer.jpg" data-top="ours">
+  <h3>hammer</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/hammer.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 1.00; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="hands" data-name="hands" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/hands.jpg" data-top="app">
+  <h3>hands</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/hands.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.13; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="harmonica-contest-on-the-mall-central-park-lccn94504459" data-name="harmonica-contest-on-the-mall-central-park-lccn94504459" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/harmonica-contest-on-the-mall-central-park-lccn94504459.jpg" data-top="app">
+  <h3>harmonica-contest-on-the-mall-central-park-lccn94504459</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/harmonica-contest-on-the-mall-central-park-lccn94504459.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.03; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="harper-s-august-met-dp823644" data-name="harper-s-august-met-dp823644" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/harper-s-august-met-dp823644.jpg" data-top="app">
+  <h3>harper-s-august-met-dp823644</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/harper-s-august-met-dp823644.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.16; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="harry-herzog-first-foreign-trade-zone-wpa-poster-1937" data-name="harry-herzog-first-foreign-trade-zone-wpa-poster-1937" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/harry-herzog-first-foreign-trade-zone-wpa-poster-1937.jpg" data-top="ours">
+  <h3>harry-herzog-first-foreign-trade-zone-wpa-poster-1937</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/harry-herzog-first-foreign-trade-zone-wpa-poster-1937.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: high-contrast photo, confidence 0.47; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="henri-de-toulouse-lautrec-006" data-name="henri-de-toulouse-lautrec-006" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/henri-de-toulouse-lautrec-006.jpg" data-top="app">
+  <h3>henri-de-toulouse-lautrec-006</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/henri-de-toulouse-lautrec-006.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.12; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="holiday_photo" data-name="holiday_photo" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/holiday_photo.jpg" data-top="app">
+  <h3>holiday_photo</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/holiday_photo.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.34; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="illustration" data-name="illustration" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/illustration.jpg" data-top="app">
+  <h3>illustration</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/illustration.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.44; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="info" data-name="info" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/info.jpg" data-top="ours">
+  <h3>info</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/info.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 1.00; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="iphone_mockup" data-name="iphone_mockup" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/iphone_mockup.jpg" data-top="ours">
+  <h3>iphone_mockup</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/iphone_mockup.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: line art, confidence 1.00; no dithering, nearest colour, colours matched in Lab</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="kalender-7-zoll" data-name="kalender-7-zoll" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/kalender-7-zoll.png" data-top="ours">
+  <h3>kalender-7-zoll</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/kalender-7-zoll.png">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 1.00; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="landscape-jpg" data-name="landscape-jpg" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/landscape-jpg.jpg" data-top="app">
+  <h3>landscape-jpg</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/landscape-jpg.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.33; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="landscape-png" data-name="landscape-png" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/landscape-png.jpg" data-top="ours">
+  <h3>landscape-png</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/landscape-png.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.28; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="littledog" data-name="littledog" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/littledog.jpg" data-top="ours">
+  <h3>littledog</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/littledog.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.19; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="master-of-flemalle-portrait-of-a-fat-man-google-art-project-331318" data-name="master-of-flemalle-portrait-of-a-fat-man-google-art-project-331318" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/master-of-flemalle-portrait-of-a-fat-man-google-art-project-331318.jpg" data-top="ours">
+  <h3>master-of-flemalle-portrait-of-a-fat-man-google-art-project-331318</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/master-of-flemalle-portrait-of-a-fat-man-google-art-project-331318.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.33; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="medication" data-name="medication" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/medication.png" data-top="app">
+  <h3>medication</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/medication.png">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 1.00; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="old_men" data-name="old_men" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/old_men.jpg" data-top="ours">
+  <h3>old_men</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/old_men.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.05; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="paint" data-name="paint" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/paint.jpg" data-top="app">
+  <h3>paint</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/paint.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.79; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="paint_oversaturated" data-name="paint_oversaturated" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/paint_oversaturated.jpg" data-top="ours">
+  <h3>paint_oversaturated</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/paint_oversaturated.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.75; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="painting" data-name="painting" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/painting.jpg" data-top="app">
+  <h3>painting</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/painting.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.32; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="person" data-name="person" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/person.jpg" data-top="ours">
+  <h3>person</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/person.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.44; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="person2" data-name="person2" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/person2.jpg" data-top="app">
+  <h3>person2</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/person2.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.05; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="pflege" data-name="pflege" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/pflege.jpg" data-top="ours">
+  <h3>pflege</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/pflege.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 1.00; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="photo_suboptimallight" data-name="photo_suboptimallight" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/photo_suboptimallight.jpg" data-top="ours">
+  <h3>photo_suboptimallight</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/photo_suboptimallight.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.17; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="photo_with_red" data-name="photo_with_red" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/photo_with_red.jpg" data-top="app">
+  <h3>photo_with_red</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/photo_with_red.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.30; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="photo_workshop" data-name="photo_workshop" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/photo_workshop.jpg" data-top="app">
+  <h3>photo_workshop</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/photo_workshop.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.40; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="pixelart" data-name="pixelart" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/pixelart.jpg" data-top="app">
+  <h3>pixelart</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/pixelart.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.10; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="professional_photo" data-name="professional_photo" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/professional_photo.jpg" data-top="ours">
+  <h3>professional_photo</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/professional_photo.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.40; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="rainbow" data-name="rainbow" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/rainbow.jpg" data-top="app">
+  <h3>rainbow</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/rainbow.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.10; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="rainbox-steps" data-name="rainbox-steps" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/rainbox-steps.jpg" data-top="ours">
+  <h3>rainbox-steps</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/rainbox-steps.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 0.73; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="regular_photo" data-name="regular_photo" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/regular_photo.jpg" data-top="ours">
+  <h3>regular_photo</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/regular_photo.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.40; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="schiff" data-name="schiff" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/schiff.jpg" data-top="app">
+  <h3>schiff</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/schiff.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.83; Stucki</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="screen-cat" data-name="screen-cat" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/screen-cat.jpg" data-top="app">
+  <h3>screen-cat</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/screen-cat.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: text or UI, confidence 0.61; Floyd-Steinberg, colours matched in Lab</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="the-chap-book" data-name="the-chap-book" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/the-chap-book.jpg" data-top="app">
+  <h3>the-chap-book</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/the-chap-book.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.12; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="titian-cardinal-pietro-bembo-google-art-project" data-name="titian-cardinal-pietro-bembo-google-art-project" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/titian-cardinal-pietro-bembo-google-art-project.jpg" data-top="app">
+  <h3>titian-cardinal-pietro-bembo-google-art-project</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/titian-cardinal-pietro-bembo-google-art-project.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.09; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="unwanted-dithering-on-e-ink-spectrum-6-displays" data-name="unwanted-dithering-on-e-ink-spectrum-6-displays" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/unwanted-dithering-on-e-ink-spectrum-6-displays.png" data-top="ours">
+  <h3>unwanted-dithering-on-e-ink-spectrum-6-displays</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/unwanted-dithering-on-e-ink-spectrum-6-displays.png">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: flat illustration, confidence 1.00; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="utagawa-kuniyoshi-image-of-a-kabuki-actor-on-a-folding-fan-google-art-project" data-name="utagawa-kuniyoshi-image-of-a-kabuki-actor-on-a-folding-fan-google-art-project" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/utagawa-kuniyoshi-image-of-a-kabuki-actor-on-a-folding-fan-google-art-project.jpg" data-top="ours">
+  <h3>utagawa-kuniyoshi-image-of-a-kabuki-actor-on-a-folding-fan-google-art-project</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/utagawa-kuniyoshi-image-of-a-kabuki-actor-on-a-folding-fan-google-art-project.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.30; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="van-gogh-starry-night-google-art-project" data-name="van-gogh-starry-night-google-art-project" data-w="1600" data-h="1200" data-cx="800" data-cy="600"
+  data-photo="../gallery/van-gogh-starry-night-google-art-project.jpg" data-top="ours">
+  <h3>van-gogh-starry-night-google-art-project</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/van-gogh-starry-night-google-art-project.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.22; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="800" height="600" style="aspect-ratio:1600/1200"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="vincent-van-gogh-self-portrait-google-art-project" data-name="vincent-van-gogh-self-portrait-google-art-project" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/vincent-van-gogh-self-portrait-google-art-project.jpg" data-top="ours">
+  <h3>vincent-van-gogh-self-portrait-google-art-project</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/vincent-van-gogh-self-portrait-google-art-project.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.03; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="westfield-athenaeum-federal-art-project-water-color-show-lccn98513161" data-name="westfield-athenaeum-federal-art-project-water-color-show-lccn98513161" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/westfield-athenaeum-federal-art-project-water-color-show-lccn98513161.jpg" data-top="ours">
+  <h3>westfield-athenaeum-federal-art-project-water-color-show-lccn98513161</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/westfield-athenaeum-federal-art-project-water-color-show-lccn98513161.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.26; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="workshops" data-name="workshops" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/workshops.png" data-top="ours">
+  <h3>workshops</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/workshops.png">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: text or UI, confidence 1.00; no dithering, nearest colour, colours matched in Lab</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<section id="wpa-federal-art-project-paintings-barnstable-high-school-hyannis-lccn98513147" data-name="wpa-federal-art-project-paintings-barnstable-high-school-hyannis-lccn98513147" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/wpa-federal-art-project-paintings-barnstable-high-school-hyannis-lccn98513147.jpg" data-top="app">
+  <h3>wpa-federal-art-project-paintings-barnstable-high-school-hyannis-lccn98513147</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/wpa-federal-art-project-paintings-barnstable-high-school-hyannis-lccn98513147.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.22; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: paperlesspaper app, re-created,
+  bottom: spectra6-dotgain</details></div>
+</section>
+<section id="wpa-index-of-american-design-exhibition-lccn98513148" data-name="wpa-index-of-american-design-exhibition-lccn98513148" data-w="1200" data-h="1600" data-cx="600" data-cy="800"
+  data-photo="../gallery/wpa-index-of-american-design-exhibition-lccn98513148.jpg" data-top="ours">
+  <h3>wpa-index-of-american-design-exhibition-lccn98513148</h3>
+  <div class="row"><figure class="photo"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>Photo <a class="m" href="../gallery/wpa-index-of-american-design-exhibition-lccn98513148.jpg">file</a></figcaption></figure><figure class="app"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>paperlesspaper app, re-created<br><span class="m">epdoptimize: photo, confidence 0.01; Floyd-Steinberg</span></figcaption></figure><figure class="ours"><div class="view"><canvas class="ov" width="600" height="800" style="aspect-ratio:1200/1600"></canvas><canvas class="inset"></canvas><div class="hl"></div></div><figcaption>spectra6-dotgain</figcaption></figure></div>
+  <div class="ab m"><button type="button" class="abbtn">A/B image</button> to send to a real frame: the middle of the
+  photo twice, one version above the other. <details><summary>Which is which</summary>top: spectra6-dotgain,
+  bottom: paperlesspaper app, re-created</details></div>
+</section>
+<p class="m">Sample images: paperlesspaper's (samples/NOTICE). Demo images: from epdoptimize (gallery/NOTICE). Both
+under their own terms.</p>
 </main>
 <script type="module">
 import { abDevice, loadModel, render, srgb8, LINEAR, indices, pngRGB } from "./panel.js";

@@ -46,25 +46,25 @@ on the frame together, and which was where stayed hidden until the frame's owner
 - Versions with the panel model beat the app 4 of 4, and that earlier version 2 of 2.
 - This exact version was tested only against the previous model version, and won.
 
-Simulated, as the mean over the 6 images on the page (S-CIELAB: colour difference from the photo after blurring
-both as the eye does at 50 cm; lower is better):
+Simulated, as the mean over the page's images (S-CIELAB: colour difference from the photo after blurring both as
+the eye does at 50 cm; lower is better):
 
-| | paperlesspaper app, re-created | ours |
-|---|---|---|
-| simulated with our panel model | 19.3 | 12.4 |
-| simulated with per-pixel mixing | 25.8 | 20.6 |
+| images | simulated with | paperlesspaper app, re-created | ours |
+|---|---|---|---|
+| 6 paperlesspaper samples | our panel model | 19.3 | 12.4 |
+| | per-pixel mixing | 25.8 | 20.6 |
+| 64 epdoptimize demo images | our panel model | 18.8 | 13.0 |
+| | per-pixel mixing | 25.2 | 20.8 |
 
-The first row favours us, since our dithering is designed for that model. Part of the gap is tone mapping, which
+The panel-model rows favour us, since our dithering is designed for that model. Part of the gap is tone mapping, which
 epdoptimize has but the app doesn't use.
 
 ## Tried, not kept
 
-- A refinement pass after the dithering (direct binary search over the inks already placed nearby): 0.03 better
-  on 8 held-out images by the simulated score above, but better on only 4 of them; it grouped dots into short dashes
-  and worms, and it took 45 to 72 s per image instead of 4 to 6.
-- Blue-noise jitter in the error diffusion (0.001 better), and another diffusion kernel (Ostromoukhov: no gain on
-  photos, 10 to 40 times more stray black dots in light areas). On an earlier version, tone-curve variants and
-  designing for a glare level between the two we measured gained at most 0.04 on a combined bright/dim-room score.
+- A refinement pass that swaps dots after dithering (direct binary search): 0.03 better on 8 held-out images, but
+  better on only 4 of them, with dots grouped into short worms, and 45 to 72 s per image instead of 4 to 6.
+- Blue-noise jitter (0.001 better), the Ostromoukhov kernel (no gain on photos, many more stray black dots in light
+  areas), tone-curve variants and designing for other glare levels (at most 0.04 better, on an earlier version).
 - The dithering already scores within 0.07 of a perfect rendering of its own target, so further gains would have to
   come from the target (tone and colour), not from where the dots go.
 
@@ -93,9 +93,10 @@ it from the app's source and have not compared it with an image saved from the a
    with Fabric; we use Pillow's bilinear filter, so this step is approximate.
 2. `suggestCanvasProcessingOptions(canvas, aitjcizeSpectra6Palette, {intent: "natural"})`, keeping only its
    dithering settings and dropping its tone mapping, as the app does.
-3. `ditherImage`: error diffusion on 8-bit sRGB with the suggested kernel (Floyd-Steinberg; Stucki for the parade
-   photo), nearest ink by RGB distance. We run its JS engine; the app runs the WASM one, with identical output on
-   these images.
+3. `ditherImage` with the suggested settings: error diffusion on 8-bit sRGB (Floyd-Steinberg, or Stucki on 12 of the
+   70 images), nearest ink by RGB distance. On 5 text and line-art images it matches colours in Lab instead, and on 3
+   of those it does not dither at all. We run its JS engine; the app's WASM engine gives identical output on all 65
+   images where it applies.
 4. `replaceColors` to the device colours.
 
 ## Limits
@@ -103,11 +104,16 @@ it from the app's source and have not compared it with an image saved from the a
 - One panel, one room, 6 photos of the chart. They include window glare; we subtract a guessed amount as if it
   were grey, which leaves the model's black purple-blue.
 - The green rule rests on one photo of the frame, checked on one more.
-- The frame tests used our own photos, judged by the frame's owner. None of the page's samples is a real photo
-  with skin; the portrait is AI-generated.
+- The frame tests used our own photos, judged by the frame's owner. On the page, real skin appears only in some of
+  epdoptimize's demo photos; the sample portrait is AI-generated.
+- On flat graphics in pure sRGB colours (colour charts, UI screens), ours looks duller than the app. It keeps the
+  hue by mixing inks, so pure yellow becomes half yellow and half green dots and pure blue gets red dots, where the
+  app uses solid ink. These are the 8 of the 64 demo images on which ours scores worse with the panel model (7
+  with per-pixel mixing).
 - The model only sees the 4 direct neighbours. Viewing angle, temperature and ghosting are not measured.
 - The measuring code and the chart photos are not included.
 
 ## License
 
-Code: Apache-2.0. Sample images: paperlesspaper's, under their own terms (`samples/NOTICE`).
+Code: Apache-2.0. Sample images: paperlesspaper's, under their own terms (`samples/NOTICE`). Demo images:
+epdoptimize's, under their own terms (`gallery/NOTICE`).
