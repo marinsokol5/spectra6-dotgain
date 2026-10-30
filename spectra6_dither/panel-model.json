@@ -1,0 +1,124 @@
+{
+ "name": "measured-v3g-lowglare",
+ "how": "One OpenPaper L, photographed showing a calibration chart: 6 daylight RAW photos, decoded linearly. inks_as_photographed: white-adapted linear RGB of the solid patches (median of the photos, room glare included: black reads Y 0.17). inks: the same with a uniform glare offset, assumed neutral, removed so black reads Y 0.06 (an assumption, not a measurement); green's blue channel is then halved, from one photo of the frame where green in fine patterns read yellow-green (the solid green patch reads teal). L: area a pixel loses at k = 1..4 (L(0) = 0), fitted on all black/white chart regions. D: spread weight of the neighbour ink (column) into the pixel ink (row), fitted on the chart's 12 two-ink checkerboards. Order of inks: black, white, blue, green, red, yellow.",
+ "inks": {
+  "black": [
+   0.06797127522457187,
+   0.05227564679186939,
+   0.11304876442916781
+  ],
+  "white": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "blue": [
+   0.06500943165614821,
+   0.20377303994711618,
+   0.6313669264624215
+  ],
+  "green": [
+   0.20088700588906233,
+   0.3657983050690352,
+   0.15157679924896034
+  ],
+  "red": [
+   0.476079219027248,
+   0.093674460607428,
+   0.09716969374848386
+  ],
+  "yellow": [
+   1.1701940453038229,
+   0.8877485470476092,
+   0.114917784008988
+  ]
+ },
+ "inks_as_photographed": {
+  "black": [
+   0.17809785082041635,
+   0.16425678519803366,
+   0.21784907765712558
+  ],
+  "white": [
+   1.0,
+   1.0,
+   1.0
+  ],
+  "blue": [
+   0.17548597252770848,
+   0.29785356147700914,
+   0.6749238437128489
+  ],
+  "green": [
+   0.29530853520060174,
+   0.44073425826796275,
+   0.38549151993076247
+  ],
+  "red": [
+   0.5379846088058,
+   0.20076400127840882,
+   0.20384624494124196
+  ],
+  "yellow": [
+   1.1500842708967838,
+   0.9010119452570189,
+   0.21949725777076218
+  ]
+ },
+ "L": [
+  0.204,
+  0.267,
+  0.329,
+  0.505
+ ],
+ "D": [
+  [
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  [
+   1.0731,
+   0.0,
+   1.0068,
+   0.2108,
+   0.8626,
+   0.9018
+  ],
+  [
+   0.128,
+   0.0,
+   0.0,
+   0.0,
+   0.0376,
+   0.0
+  ],
+  [
+   0.5218,
+   0.0,
+   0.0524,
+   0.0,
+   0.1404,
+   0.0
+  ],
+  [
+   0.2504,
+   0.0,
+   0.0,
+   0.0,
+   0.0,
+   0.0
+  ],
+  [
+   0.2407,
+   0.0,
+   0.6058,
+   0.499,
+   0.1638,
+   0.0
+  ]
+ ]
+}
