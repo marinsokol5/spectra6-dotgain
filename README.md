@@ -2,8 +2,7 @@
 
 We dither photos for a paperlesspaper OpenPaper L (13.3" E Ink Spectra 6, 1600x1200 at 150 ppi) against a model of
 how its dots really render, measured on our frame. This repository holds that code, the measurements behind it, and
-a page that shows our output next to epdoptimize 1.3.0 as the paperlesspaper app runs it. It is what we use, not a
-request to change epdoptimize's default.
+a page that shows our output next to epdoptimize 1.3.0 as the paperlesspaper app runs it.
 
 Comparison page: https://marinsokol5.github.io/spectra6-dither/compare/
 
