@@ -57,6 +57,17 @@ both as the eye does at 50 cm; lower is better):
 The first row favours us, since our dithering is designed for that model. Part of the gap is tone mapping, which
 epdoptimize has but the app doesn't use.
 
+## Tried, not kept
+
+- A refinement pass after the dithering (direct binary search over the inks already placed nearby): 0.03 better
+  on 8 held-out images by the simulated score above, but better on only 4 of them; it grouped dots into short dashes
+  and worms, and it took 45 to 72 s per image instead of 4 to 6.
+- Blue-noise jitter in the error diffusion (0.001 better), and another diffusion kernel (Ostromoukhov: no gain on
+  photos, 10 to 40 times more stray black dots in light areas). On an earlier version, tone-curve variants and
+  designing for a glare level between the two we measured gained at most 0.04 on a combined bright/dim-room score.
+- The dithering already scores within 0.07 of a perfect rendering of its own target, so further gains would have to
+  come from the target (tone and colour), not from where the dots go.
+
 ## Run it
 
 ```
